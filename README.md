@@ -22,4 +22,4 @@ Spring
 - 일일히 다 만드는 방법
 - bean의 id는 고유한 id, class는 패키지 포함한 내용
 
-Next 6. DI(Dependency Injection)
+#### Next 6. DI(Dependency Injection)
