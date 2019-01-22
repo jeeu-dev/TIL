@@ -20,7 +20,7 @@ Spring
 - 스프링에서는 'new 생성자' 하지않고 ApplicationContext에서 bean 태그에서 constructor-arg 등록 한다음, 주입할 dao를 ref로 넣는다.
 - GenericXmlApplicationContext & getBean 사용
 #### 7. 다양한 의존 객체 주입
-- 7-1 : 생성자를 이용한 의존 객체 주입
+- 7-1 : 생성자를 이용한 의존 객체 주입 <br>
 Ex) <br>
 ```java
 public StudentRegisterService(StudentDao studentDao){
