@@ -77,6 +77,8 @@ public void setJdbcUrl(String setJdbcUrl){
 → 어차피 문자 형태이기 때문에 배열로 들어가게 할 수 있다. 배열 이용!
 ```java
 String [] appCtxs = {"classpath:appCtx1.xml", "classpath:appCtx2.xml", "classpath:appCtx3.xml"};
+
+GenericXmlApplicationContext ctx = new GenericXmlApplicationContext(appCtxs);
 ```
 → 하나의 xml 파일에서 다른 xml 파일을 <code>import</code> 시켜주면 불러올 때 <code>import</code>가 적힌 하나의 파일만 가져오면 된다!
 ```java
@@ -88,6 +90,7 @@ String [] appCtxs = {"classpath:appCtx1.xml", "classpath:appCtx2.xml", "classpat
  <constructor-arg ref="~~~"></constructor-arg>
 </bean>
 ```
+→ 이렇게 가져오는게 흔하지는 않음 / 그냥 배열로 가져오는 것을 더 선호
 
 
 
