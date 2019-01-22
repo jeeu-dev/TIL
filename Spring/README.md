@@ -63,9 +63,19 @@ public void setJdbcUrl(String setJdbcUrl){
 ```
 
 - 7-4 : Map 타입 갭체 주입
-- Map 태그 안에 Key 태그 - Value 태그 쌍으로 존재
+- <code>Map</code> 태그 안에 <code>Key</code> 태그 - <code>Value</code> 태그 쌍으로 존재
+
+#### 8. 스프링 설정 파일 분리
+- 스프링 설정 파일(xml)이 너무 많아지면 비효율적
+
+- 8-1 : 스프링 설정파일 분리
+> applicationContext.xml
+>> appCtx1.xml / appCtx2.xml / appCtx3.xml
+→ 이런식으로 파일 분리
 
 
+
+- 8-2 : Bean의 범위
 
 
 
