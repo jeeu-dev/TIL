@@ -74,11 +74,23 @@ public void setJdbcUrl(String setJdbcUrl){
 → 이런식으로 파일 분리
 → 기능별로 분리했기 때문에 기능별로 이름을 지어준다.
 → Ex) AppDaoService / AppDataBase / AppInformation / etc
-→ 어차피 문자 형태이기 때문에 배열로 들어가게 할 수 있다.
+→ 어차피 문자 형태이기 때문에 배열로 들어가게 할 수 있다. 배열 이용!
 ```java
 String [] appCtxs = {"classpath:appCtx1.xml", "classpath:appCtx2.xml", "classpath:appCtx3.xml"};
 ```
-→ 
+→ 하나의 xml 파일에서 다른 xml 파일을 <code>import</code> 시켜주면 불러올 때 <code>import</code>가 적힌 하나의 파일만 가져오면 된다!
+```java
+#하나의 xml 파일
+<import resource="classpath:appCtx2.xml">
+<import resource="classpath:appCtx3.xml">
+
+<bean id= "~~~" class="~~~~">
+ <constructor-arg ref="~~~"></constructor-arg>
+</bean>
+```
+
+
+
 
 - 8-2 : Bean의 범위
 
