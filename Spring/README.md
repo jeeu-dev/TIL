@@ -37,11 +37,13 @@ public StudentRegisterService(StudentDao studentDao){
 <br>
 - 7-2 : setter를 이용한 의존 객체 주입
 - set을 띄고 첫번째 글자를 소문자로 바꿔서 property name에 표현(규칙임), parameter로 들어오는 값들을 value에 속성 값으로 이용할 수 있음
+
 ```java
 public void setJdbcUrl(String setJdbcUrl){
 	this.jdbcUrl = jdbcUrl;
 }
 ```
+
 ```java
 <bean id="dataBaseConnectionInfoDev" class="ems.member.dataBaseConnectionInfoDev">
  <property name = "jdbcUrl" value="jdbc:oracl:this:@localhost:1521:xe"/>
