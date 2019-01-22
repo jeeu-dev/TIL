@@ -9,12 +9,12 @@ Spring
 - Spring 설정 파일(ApplicationContext)를 통해서 객체 생성
 - DI(의존성 주입)란? <br>
 -- EX)
--- 배터리 일체형 -> 배터리 교체 불가(장난감 새로 구입) <br>
--- 배터리 분리형 -> 배터리만 교체하면 됨 <br>
--- 스프링 컨테이너 생성 및 빈(Bean) 객체 호출 과정 <br>
--> 스프링 설정파일(ApplicationContext.xml)을 통해 Spring Container 생성<br>
--> Spring Container 안에 객체가 있고 객체 안에 또 객체가 있을 수 있음 <br>
--> 의존성 주입 방식 -> 생성자 방식 / Setter 방식 <br> 
+- 배터리 일체형 → 배터리 교체 불가(장난감 새로 구입) <br>
+- 배터리 분리형 → 배터리만 교체하면 됨 <br>
+- 스프링 컨테이너 생성 및 빈(Bean) 객체 호출 과정 <br>
+→ 스프링 설정파일(ApplicationContext.xml)을 통해 Spring Container 생성<br>
+→ Spring Container 안에 객체가 있고 객체 안에 또 객체가 있을 수 있음 <br>
+→ 의존성 주입 방식 → 생성자 방식 / Setter 방식 <br> 
 - DAO를 통해 DB와 통신
 - DAO 생성 후 모든 객체에 DAO 주입
 - 스프링에서는 'new 생성자' 하지않고 ApplicationContext에서 bean 태그에서 constructor-arg 등록한 다음, 주입할 dao를 ref로 넣는다.
@@ -27,7 +27,7 @@ public StudentRegisterService(StudentDao studentDao){
 }
 ```
 
-=> <br>
+→ <br>
 ```java
 <bean id="studentDao" class="ems.member.dao.StudentDao"></bean>
 <bean id="registerService" class="ems.member.service.StudentRegisterService">
@@ -43,7 +43,7 @@ public void setJdbcUrl(String setJdbcUrl){
 	this.jdbcUrl = jdbcUrl;
 }
 ```
-
+→
 ```java
 <bean id="dataBaseConnectionInfoDev" class="ems.member.dataBaseConnectionInfoDev">
  <property name = "jdbcUrl" value="jdbc:oracl:this:@localhost:1521:xe"/>
@@ -73,8 +73,8 @@ public void setJdbcUrl(String setJdbcUrl){
 - dependency 태그→ 내가 필요한 모듈
 - bulid 태그 → 빌드할 때 필요한 명령들
 - Spring만이 가지고 있는 기능들
-- 스프링컨테이너(ApplicationContext)의 객체 -> bean(Object)
-- 객체 생성 -> 메모리에 로드되었다는 것 / ApplicationCOntext에 있다는 것은 New 키워드가 필요없음 -> 객체 생성되어있음
+- 스프링컨테이너(ApplicationContext)의 객체 → bean(Object)
+- 객체 생성 → 메모리에 로드되었다는 것 / ApplicationCOntext에 있다는 것은 New 키워드가 필요없음 → 객체 생성되어있음
 #### 5. 또 다른 프로젝트 생성방법
 - 일일히 다 만드는 방법
 - bean의 id는 고유한 id, class는 패키지 포함한 내용
