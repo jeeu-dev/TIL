@@ -72,8 +72,13 @@ public void setJdbcUrl(String setJdbcUrl){
 > applicationContext.xml
 >> appCtx1.xml / appCtx2.xml / appCtx3.xml
 → 이런식으로 파일 분리
-
-
+→ 기능별로 분리했기 때문에 기능별로 이름을 지어준다.
+→ Ex) AppDaoService / AppDataBase / AppInformation / etc
+→ 어차피 문자 형태이기 때문에 배열로 들어가게 할 수 있다.
+```java
+String [] appCtxs = {"classpath:appCtx1.xml", "classpath:appCtx2.xml", "classpath:appCtx3.xml"};
+```
+→ 
 
 - 8-2 : Bean의 범위
 
