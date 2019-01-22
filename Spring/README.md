@@ -62,6 +62,8 @@ public void setJdbcUrl(String setJdbcUrl){
 </property>
 ```
 
+- 7-4 : Map 타입 갭체 주입
+- Map 태그 안에 Key 태그 - Value 태그 쌍으로 존재
 
 
 
