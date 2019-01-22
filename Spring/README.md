@@ -70,7 +70,7 @@ public void setJdbcUrl(String setJdbcUrl){
 
 - 8-1 : 스프링 설정파일 분리
 > applicationContext.xml
->> appCtx1.xml / appCtx2.xml / appCtx3.xml
+>> appCtx1.xml / appCtx2.xml / appCtx3.xml <br>
 → 이런식으로 파일 분리
 → 기능별로 분리했기 때문에 기능별로 이름을 지어준다.
 → Ex) AppDaoService / AppDataBase / AppInformation / etc
@@ -93,10 +93,21 @@ GenericXmlApplicationContext ctx = new GenericXmlApplicationContext(appCtxs);
 → 이렇게 가져오는게 흔하지는 않음 / 그냥 배열로 가져오는 것을 더 선호
 
 
-
-
 - 8-2 : Bean의 범위
-
+- 클래스를 이용해서, new 키워드를 이용해서 객체를 생성할 때마다 메모리에 매번 새로운 객체가 생성됨 Ex) <code>new ClassName();</code>
+- But 스프링에서는 xml을 통해 Container를 만들었고 그 Container 안에는 객체들이 생성되어 있음. 따라서 getBean을 쓸 때마다 개체를 생성하는 것이 아니라 '호출'하는 것. → 동일한 객체를 가르킬 수 있다는 것. 동일한 객체 참조
+→ 이것을 <code>싱글톤(Singleton)</code>이라고 한다.
+→ <code>싱글톤(Singleton)</code>
+: 스프링 컨테이너에서 생성된 빈(Bean)객체의 경우 동일한 타입에 대해서는 기본적으로 한 개만 생성되며, getBean() 메소드로 호출된 동일한 객체가 반환된다. ※ 강의 PPT 中
+→ <code>프로토타입(Prototype)</code>
+: 싱글톤의 반대 개념. 프로톤타입의 경우 개발자는 별도로 설정을 해줘야 하는데, 스프링 설정 파일에서 빈(Bean)객체를 정의할 때 scope속성을 명시해 주면 된다.
+```java
+<bean id="dependencyBean" class="scope.ex.DependencyBean" scope="prototype">
+ <constructor-arg ref="injectionBean" />
+ <property name="injectionBean" ref="injectionBean" />
+</bean>
+```
+- 싱글톤은 <code>Default</code>
 
 
 
