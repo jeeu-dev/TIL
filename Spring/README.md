@@ -7,11 +7,14 @@ Spring
 > 2019-01-22
 #### 6. DI(Dependency Injection)
 - Spring 설정 파일(ApplicationContext)를 통해서 객체 생성
-- DI(의존성 주입)란?
+- DI(의존성 주입)란? <br>
 -- EX)
--- 배터리 일체형 -> 배터리 교체 불가(장난감 새로 구입)
--- 배터리 분리형 -> 배터리만 교체하면 됨
-
+-- 배터리 일체형 -> 배터리 교체 불가(장난감 새로 구입) <br>
+-- 배터리 분리형 -> 배터리만 교체하면 됨 <br>
+-- 스프링 컨테이너 생성 및 빈(Bean) 객체 호출 과정 <br>
+-> 스프링 설정파일(ApplicationContext.xml)을 통해 Spring Container 생성<br>
+-> Spring Container 안에 객체가 있고 객체 안에 또 객체가 있을 수 있음 <br>
+-> 
 
 
 
