@@ -22,7 +22,7 @@ Spring
 #### 7. 다양한 의존 객체 주입
 - 7-1 : 생성자를 이용한 의존 객체 주입
 Ex) <br>
-'''java
+```java
 public StudentRegisterService(StudentDao studentDao){
 	this.studentDao = studentDao;
 }
@@ -30,7 +30,7 @@ public StudentRegisterService(StudentDao studentDao){
 <bean id="registerService" class="ems.member.service.StudentRegisterService">
 	<constructor-arg ref="studentDao"></constructor-arg>
 </bean>
-'''
+```
 
 
 
