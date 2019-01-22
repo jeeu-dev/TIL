@@ -21,15 +21,16 @@ Spring
 - GenericXmlApplicationContext & getBean 사용
 #### 7. 다양한 의존 객체 주입
 - 7-1 : 생성자를 이용한 의존 객체 주입 <br>
-Ex) <br>
+<br>
 ```java
 public StudentRegisterService(StudentDao studentDao){
 	this.studentDao = studentDao;
 }
 ```
 <br>
+=> <br>
 ```java
-=> <bean id="studentDao" class="ems.member.dao.StudentDao"></bean>
+ <bean id="studentDao" class="ems.member.dao.StudentDao"></bean>
 <bean id="registerService" class="ems.member.service.StudentRegisterService">
 	<constructor-arg ref="studentDao"></constructor-arg>
 </bean>
