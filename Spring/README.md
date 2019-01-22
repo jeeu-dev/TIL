@@ -2,8 +2,17 @@ Spring
 ====================
 
 > 자료 : 자바 스프링 프레임워크(ver.2018) – 신입 프로그래머를 위한 [강좌](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC_renew/)<br>
--------
+--------
+> 2019-01-22
+#### 9. 의존객체 자동 주입
+- 9-1 : 의존 객체 자동 주입이란? <br>
+→ 스프링 설정 파일에서 의존 객체를 주입할 때 <code><constructor-org></code> 또는 <code><property></code> 태그로 의존 대상 객체를 명시하지 않아도 스프링 컨테이너가 자동으로 필요한 의존 대상 객체를 찾아서 의존 대상 객체가 필요한 객체에 주입해 주는 기능이다.
+→ 구현 방법은 <code>@Autowired</code>와 <code>@Resource</code>어노테이션을 이용해서 쉽게 구현할 수 있다.
 
+
+
+
+--------
 > 2019-01-22
 #### 6. DI(Dependency Injection)
 - Spring 설정 파일(ApplicationContext)를 통해서 객체 생성
@@ -108,10 +117,6 @@ GenericXmlApplicationContext ctx = new GenericXmlApplicationContext(appCtxs);
 </bean>
 ```
 - 싱글톤은 <code>Default</code> → 꼭 프로토타입으로 사용하겠다 할때만 scope에 명시
-
-
-
-
 
 
 
