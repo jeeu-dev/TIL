@@ -8,7 +8,7 @@ Spring
 #### 6. DI(Dependency Injection)
 - Spring 설정 파일(ApplicationContext)를 통해서 객체 생성
 - DI(의존성 주입)란? <br>
--- EX)
+EX)
 - 배터리 일체형 → 배터리 교체 불가(장난감 새로 구입) <br>
 - 배터리 분리형 → 배터리만 교체하면 됨 <br>
 - 스프링 컨테이너 생성 및 빈(Bean) 객체 호출 과정 <br>
@@ -34,7 +34,7 @@ public StudentRegisterService(StudentDao studentDao){
 	<constructor-arg ref="studentDao"></constructor-arg>
 </bean>
 ```
-<br>
+
 - 7-2 : setter를 이용한 의존 객체 주입
 - set을 띄고 첫번째 글자를 소문자로 바꿔서 property name에 표현(규칙임), parameter로 들어오는 값들을 value에 속성 값으로 이용할 수 있음
 
@@ -49,6 +49,19 @@ public void setJdbcUrl(String setJdbcUrl){
  <property name = "jdbcUrl" value="jdbc:oracl:this:@localhost:1521:xe"/>
 </bean>
 ```
+
+- 7-3 : List 타입 의존 객체 주입
+- list의 경우 <code>list</code> 태그를 써서 value를 주입한다.
+```java
+<property name="developers">
+ <list>
+   <value>Cheney.</value>
+   <value>Eloy.</value>
+   <value>Jasper.</value>
+   <value>Kian.</value>
+</property>
+```
+
 
 
 
