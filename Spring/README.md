@@ -154,8 +154,9 @@ Ex) 인증 <br>
  <bean id="memberSearchService" class="com.brms.member.service.MemberSearchService" />
 
 ```
-bookRegisterService가 스프링 컨테이너에 생성될 때 특정한 작업이 하고 싶다 → InitializingBean과 DisposableBean을 가지고 빈객체가 생성/소멸 될 때 특정한 작업 <br>
-특정한 작업 Ex) 아이디와 비밀번호를 가지고 DB 인증 절차 / 특정 네트워크 상에 있는 자원을 끌어온다 <br>
+bookRegisterService가 스프링 컨테이너에 생성될 때 특정한 작업이 하고 싶다 <br> 
+→ InitializingBean과 DisposableBean을 가지고 빈객체가 생성/소멸 될 때 특정한 작업 <br>
+※ 특정한 작업 Ex) 아이디와 비밀번호를 가지고 DB 인증 절차 / 특정 네트워크 상에 있는 자원을 끌어온다 <br>
 ```java
 public class bookRegisterService implements InitializingBean, DisposableBean{
 
