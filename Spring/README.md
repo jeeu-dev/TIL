@@ -5,17 +5,17 @@ Spring
 --------
 > 2019-01-23
 ### 9. 의존객체 자동 주입
-- 9-1 : 의존 객체 자동 주입이란? <br>
+#### 9-1 : 의존 객체 자동 주입이란? <br>
 → 스프링 설정 파일에서 의존 객체를 주입할 때 <code>constructor-org</code> 또는 <code>property</code> 태그로 의존 대상 객체를 명시하지 않아도 스프링 컨테이너가 자동으로 필요한 의존 대상 객체를 찾아서 의존 대상 객체가 필요한 객체에 주입해 주는 기능이다. <br>
 → 구현 방법은 <code>@Autowired</code>와 <code>@Resource</code>어노테이션을 이용해서 쉽게 구현할 수 있다.
 
-- 9-2 : @Autowired <br>
+#### 9-2 : @Autowired <br>
 → 주입하려고 하는 <b>객체의 타입</b>이 일치하는 객체를 자동으로 주입한다.
-→ "<b>타입</b>을 보고 <b>자동</b>으로 넣어준다"
+→ "<b>타입</b>을 보고 <b>자동</b>으로 넣어준다" <br>
 
-→ xml에 <code>bean</code>만 추가하고(따로 contructor-arg 명시 X) class에서 <code>@Autowired</code>를 추가한다.
+→ xml에 <code>bean</code>만 추가하고(따로 contructor-arg 명시 X class에서 <code>@Autowired</code>를 추가한다. <br>
 
-→ 생성자의 Autowired를 쓸 때는 그냥 쓰면 됨. <br>단, property나 method에 쓸 때는 반드시 default 생성자를 명시해줘야 함!
+→ 생성자의 Autowired를 쓸 때는 그냥 쓰면 됨. <br> 단, property나 method에 쓸 때는 반드시 default 생성자를 명시해줘야 함!
 ```java
 #Default 생성자
 pulic WordRegisterService(){
@@ -32,14 +32,14 @@ public void setWordDao(WordDao wordDao){
 	this.wordDao = wordDao;
 }
 ```
-- 9-3 : @Resource
+#### 9-3 : @Resource <br>
 → 주입하려고 하는 <b>객체의 이름</b>이 일치하는 객체를 자동으로 주입한다.<br>
 → 생성자에는 쓰지 못한다. property 또는 method에만 쓸 수 있다. <br>
 → 마찬가지로 default 생성자를 명시해줘야 한다! <br>
 
 ### 10. 의존객체 선택
 → 다수의 빈(Bean) 객체 중 의존 객체의 대상이 되는 객체를 선택하는 방법에 대해서 학습 <br>
-- 10-1. 의존객체 선택 <br>
+#### 10-1. 의존객체 선택 <br>
 → Exception : 동일한 객체가 2개 이상인 경우 스프링 컨테이너는 자동 주입 대상 객체를 판단하지 못해서 Exception을 발생시킨다. <br>
 → <code>qualifier</code>태그를 써준다.
 ```java
@@ -72,7 +72,7 @@ private WordDao wordDao;
 private WordDao wordDao;
 ```
 → <code>qualifier</code>태그를 써라. <br>
-- 10-2. 의존객체 자동 주입 체크
+#### 10-2. 의존객체 자동 주입 체크
 → 이렇게 하는건 초보들이나 하는거지 거의 하는 경우가 없음
 - 빈(Bean) 객체가 없는데 Autowired를 썼을 경우 Exception이 발생하지 않게 하는 방법
 → Autowired의 속성 중 required라는 속성이 있는데 false로 두면 됨
@@ -80,7 +80,8 @@ private WordDao wordDao;
 @Autowired(requred=false)
 private WordDao wordDao;
 ```
-- 10-3. @Inject
+
+#### 10-3. @Inject
 → @Autowired와 거의 비슷하게 @Inject 어노테이션을 이용해서 의존 객체를 자동으로 주입을 할 수 있다. @Autowired와 차이점이라면 @Autowired의 경우 required 속성을 이용해서 의존 대상 객체가 없어도 익셉션을 피할 수 있지만, Inject의 경우 required 속성을 지원하지 않는다. <br>
 → Q. 어느 것이 더 많이 쓰이나요? @Autowired vs @Inject <br>
 → A. @Autowired가 더 많이 쓰입니다. 정확하게 왜 더 많이 쓰이는지는 모르겠는데 실무에서 더 많이 씁니다. <br>
@@ -103,7 +104,7 @@ private WordDao wordDao;
 
 ### 11. 생명주기(Life Cycle)
 → 스프링 컨테이너와 빈(Bean) 객체의 생명주기(Life Cycle)에 대해 학습.
-- 11-1 : 스프링 컨테이너 생명주기
+#### 11-1 : 스프링 컨테이너 생명주기
 
 ```java
 #생성 - GenericXmlApplicationContext를 이용한 스프링 컨테이너 초기화(생성)
@@ -130,7 +131,7 @@ ctx.close();
 → 메모리에서 없어진다는 뜻 <br>
 
 
-- 11-2 : 빈(Bean)객체 생명주기
+#### 11-2 : 빈(Bean)객체 생명주기
 → 빈(Bean)객체의 생명주기는 스프링 컨테이너의 생명주기와 같이 한다.
 > 스프링 컨테이너 초기화 - 빈(Bean) 객체 생성 및 주입 <br>
 > 스프링 컨테이너 종료 - 빈(Bean) 객체 소멸 <br>
@@ -178,7 +179,7 @@ public class bookRegisterService implements InitializingBean, DisposableBean{
 	}
 }
 ```
-- 11-3 : init-method, destroy-method 속성
+#### 11-3 : init-method, destroy-method 속성
 → 빈(Bean) 객체를 생성할 때 속성값을 넣어줄 수 있다. <br>
 ```java
 #.xml
