@@ -4,7 +4,7 @@ Spring
 > 자료 : 자바 스프링 프레임워크(ver.2018) – 신입 프로그래머를 위한 [강좌](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC_renew/)<br>
 --------
 > 2019-01-23
-#### 9. 의존객체 자동 주입
+### 9. 의존객체 자동 주입
 - 9-1 : 의존 객체 자동 주입이란? <br>
 → 스프링 설정 파일에서 의존 객체를 주입할 때 <code><constructor-org></code> 또는 <code><property></code> 태그로 의존 대상 객체를 명시하지 않아도 스프링 컨테이너가 자동으로 필요한 의존 대상 객체를 찾아서 의존 대상 객체가 필요한 객체에 주입해 주는 기능이다. <br>
 → 구현 방법은 <code>@Autowired</code>와 <code>@Resource</code>어노테이션을 이용해서 쉽게 구현할 수 있다.
@@ -33,11 +33,11 @@ public void setWordDao(WordDao wordDao){
 }
 ```
 - 9-3 : @Resource
-→ 주입하려고 하는 <b>객체의 이름</b>이 일치하는 객체를 자동으로 주입한다.
-→ 생성자에는 쓰지 못한다. property 또는 method에만 쓸 수 있다.
-→ 마찬가지로 default 생성자를 명시해줘야 한다!
+→ 주입하려고 하는 <b>객체의 이름</b>이 일치하는 객체를 자동으로 주입한다.<br>
+→ 생성자에는 쓰지 못한다. property 또는 method에만 쓸 수 있다. <br>
+→ 마찬가지로 default 생성자를 명시해줘야 한다! <br>
 
-#### 10. 의존객체 선택
+### 10. 의존객체 선택
 → 다수의 빈(Bean) 객체 중 의존 객체의 대상이 되는 객체를 선택하는 방법에 대해서 학습 <br>
 - 10-1. 의존객체 선택 <br>
 → Exception : 동일한 객체가 2개 이상인 경우 스프링 컨테이너는 자동 주입 대상 객체를 판단하지 못해서 Exception을 발생시킨다. <br>
@@ -80,6 +80,70 @@ private WordDao wordDao;
 @Autowired(requred=false)
 private WordDao wordDao;
 ```
+- 10-3. @Inject
+→ @Autowired와 거의 비슷하게 @Inject 어노테이션을 이용해서 의존 객체를 자동으로 주입을 할 수 있다. @Autowired와 차이점이라면 @Autowired의 경우 required 속성을 이용해서 의존 대상 객체가 없어도 익셉션을 피할 수 있지만, Inject의 경우 required 속성을 지원하지 않는다. <br>
+→ Q. 어느 것이 더 많이 쓰이나요? @Autowired vs @Inject <br>
+→ A. @Autowired가 더 많이 쓰입니다. 정확하게 왜 더 많이 쓰이는지는 모르겠는데 실무에서 더 많이 씁니다. <br>
+→ 댓글 : @Autowired - 스프링에서(만) 지원하는 어노테이션 / @Inject - 자바에서 지원하는 어노테이션 이라고 알고 있습니다 [링크](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC_renew/%EC%9D%98%EC%A1%B4%EA%B0%9D%EC%B2%B4-%EC%84%A0%ED%83%9D/) <br>
+→ @Autowired의 qualifier처럼 @Inject는 @Named가 있음
+```java
+#.xml
+<bean id="wordDao1" class="com.word.dao.WordDao" />
+
+# .java
+@Inject
+@Named(value="wordDao1")
+private WordDao wordDao;
+```
+- 많이 쓰이는 것 : @Autowired > @Resource > @Inject
+- <code>qualifier</code>는 종종 쓰인다.
+- <code>required</code>는 초짜 개발자,,들이 쓰지 않을까요?
+
+음..
+
+### 11. 생명주기(Life Cycle)
+→ 스프링 컨테이너와 빈(Bean) 객체의 생명주기(Life Cycle)에 대해 학습.
+- 11-1 : 스프링 컨테이너 생명주기
+
+```java
+#생성 - GenericXmlApplicationContext를 이용한 스프링 컨테이너 초기화(생성)
+GenericXmlApplicationContext ctx = new GenericXmlApplicationContext("classpath:appCtx.xml");
+```
+※ 스프링 컨테이너 생성과 빈 객체 생성 시점은 동일하다고 할 수 있다.
+
+```java
+#getBean()을 이용한 빈(Bean)객체 이용
+BookRegisterService BookRegisterService = ctx.getBean("bookRegisterService", BookRegisterService.class);
+
+BookSearchService BookSearchService = ctx.getBean("BookSearchService", BookSearchService.class);
+
+MemberRegisterService memberRegisterService = ctx.getBean("memberRegisterService", MemberRegisterService.class);
+
+MemeberSearchSerivce memberSearchService = ctx.getBean("memberSearchService", MemberSearchService.class);
+```
+
+```java
+#소멸 - close()를 이용한 스프링 컨테이너 종료
+ctx.close();
+```
+→ 스프링 컨테이너 소멸, 자동으로 빈 객체 소멸 <br>
+→ 메모리에서 없어진다는 뜻 <br>
+
+
+- 11-2 : 빈(Bean)객체 생명주기
+→ 빈(Bean)객체의 생명주기는 스프링 컨테이너의 생명주기와 같이 한다.
+> 스프링 컨테이너 초기화 - 빈(Bean) 객체 생성 및 주입
+> 스프링 컨테이너 종료 - 빈(Bean) 객체 소멸
+- 빈(Bean) 객체
+afterPropertiesSet() : 빈(Bean) 객체 생성시점에 호출
+destroy() : 빈(Bean) 객체 소멸시점에 호출
+→ 빈(Bean)객체의 생성시점과 소멸시점에 작업하고 싶으면 위의 메소드를 쓰면 됨 <br>
+Ex) 인증 <br>
+
+
+
+- 11-3 : init-method, destroy-method 속성
+
 
 
 
@@ -89,7 +153,7 @@ private WordDao wordDao;
 
 --------
 > 2019-01-22
-#### 6. DI(Dependency Injection)
+### 6. DI(Dependency Injection)
 - Spring 설정 파일(ApplicationContext)를 통해서 객체 생성
 - DI(의존성 주입)란? <br>
 EX)
@@ -103,7 +167,7 @@ EX)
 - DAO 생성 후 모든 객체에 DAO 주입
 - 스프링에서는 'new 생성자' 하지않고 ApplicationContext에서 bean 태그에서 constructor-arg 등록한 다음, 주입할 dao를 ref로 넣는다.
 - GenericXmlApplicationContext & getBean 사용
-#### 7. 다양한 의존 객체 주입
+### 7. 다양한 의존 객체 주입
 - 7-1 : 생성자를 이용한 의존 객체 주입 <br>
 ```java
 public StudentRegisterService(StudentDao studentDao){
@@ -149,7 +213,7 @@ public void setJdbcUrl(String setJdbcUrl){
 - 7-4 : Map 타입 갭체 주입
 - <code>Map</code> 태그 안에 <code>Key</code> 태그 - <code>Value</code> 태그 쌍으로 존재
 
-#### 8. 스프링 설정 파일 분리
+### 8. 스프링 설정 파일 분리
 - 스프링 설정 파일(xml)이 너무 많아지면 비효율적
 
 - 8-1 : 스프링 설정파일 분리
@@ -197,22 +261,22 @@ GenericXmlApplicationContext ctx = new GenericXmlApplicationContext(appCtxs);
 
 -------
 > 2019-01-21
-#### 1. 스프링 개요
-#### 2. 개발 환경 구축
-#### 3. 스프링 프로젝트 생성 
+### 1. 스프링 개요
+### 2. 개발 환경 구축
+### 3. 스프링 프로젝트 생성 
 <br/>: Maven을 이용해서 스프링 프로젝트를 생성하는 방법에 대하여 학습
 - 프로젝트 생성
 - pom.xml 작성
 - 폴더 및 pom.xml 파일의 이해
 : pom.xml 파일은 메이븐 설정 파일로 메이븐은 라이브러리를 연결해주고, 빌드를 위한 플랫폼이다. → 외부 레파지토리에서 내꺼로 다운로드 해준다
-#### 4. 처음해 보는 스프링 프로젝트
+### 4. 처음해 보는 스프링 프로젝트
 - dependency 태그→ 내가 필요한 모듈
 - bulid 태그 → 빌드할 때 필요한 명령들
 - Spring만이 가지고 있는 기능들
 - 스프링컨테이너(ApplicationContext)의 객체 → bean(Object)
 - 객체 생성 → 메모리에 로드되었다는 것 / ApplicationCOntext에 있다는 것은 New 키워드가 필요없음 → 객체 생성되어있음
-#### 5. 또 다른 프로젝트 생성방법
+### 5. 또 다른 프로젝트 생성방법
 - 일일히 다 만드는 방법
 - bean의 id는 고유한 id, class는 패키지 포함한 내용
 
-#### Next 6. DI(Dependency Injection)
+### Next 6. DI(Dependency Injection)
