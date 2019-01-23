@@ -37,6 +37,52 @@ public void setWordDao(WordDao wordDao){
 → 생성자에는 쓰지 못한다. property 또는 method에만 쓸 수 있다.
 → 마찬가지로 default 생성자를 명시해줘야 한다!
 
+#### 10. 의존객체 선택
+→ 다수의 빈(Bean) 객체 중 의존 객체의 대상이 되는 객체를 선택하는 방법에 대해서 학습 <br>
+- 10-1. 의존객체 선택 <br>
+→ Exception : 동일한 객체가 2개 이상인 경우 스프링 컨테이너는 자동 주입 대상 객체를 판단하지 못해서 Exception을 발생시킨다. <br>
+→ <code>qualifier</code>태그를 써준다.
+```java
+#Exception 발생
+<bean id="wordDao1" class="com.word.dao.WordDao" />
+<bean id="wordDao2" class="com.word.dao.WordDao" />
+<bean id="wordDao3" class="com.word.dao.WordDao" />
+```
+→ 
+```java
+#.xml
+<bean id="wordDao1" class="com.word.dao.WordDao">
+  <qualifier value="userDao" />
+</bean>
+
+#.java
+@Autowired
+@Qualifier("UsedDao")
+private WordDao wordDao;
+```
+→ but 아래의 경우는 가능하다. → 좋은 방법은 아니며, 추천하지 않음 : 코드가 길어지고 개발자가 혼동될 수 있음
+```java
+#.xml
+<bean id="wordDao" class="com.word.dao.WordDao" />
+<bean id="wordDao2" class="com.word.dao.WordDao" />
+<bean id="wordDao3" class="com.word.dao.WordDao" />
+
+#.java
+@Autowired
+private WordDao wordDao;
+```
+→ <code>qualifier</code>태그를 써라. <br>
+- 10-2. 의존객체 자동 주입 체크
+→ 이렇게 하는건 초보들이나 하는거지 거의 하는 경우가 없음
+- 빈(Bean) 객체가 없는데 Autowired를 썼을 경우 Exception이 발생하지 않게 하는 방법
+→ Autowired의 속성 중 required라는 속성이 있는데 false로 두면 됨
+```java
+@Autowired(requred=false)
+private WordDao wordDao;
+```
+
+
+
 
 
 
