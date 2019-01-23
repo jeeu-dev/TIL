@@ -132,24 +132,80 @@ ctx.close();
 
 - 11-2 : 빈(Bean)객체 생명주기
 → 빈(Bean)객체의 생명주기는 스프링 컨테이너의 생명주기와 같이 한다.
-> 스프링 컨테이너 초기화 - 빈(Bean) 객체 생성 및 주입
-> 스프링 컨테이너 종료 - 빈(Bean) 객체 소멸
-- 빈(Bean) 객체
-afterPropertiesSet() : 빈(Bean) 객체 생성시점에 호출
-destroy() : 빈(Bean) 객체 소멸시점에 호출
+> 스프링 컨테이너 초기화 - 빈(Bean) 객체 생성 및 주입 <br>
+> 스프링 컨테이너 종료 - 빈(Bean) 객체 소멸 <br>
+- 빈(Bean) 객체 <br>
+afterPropertiesSet() : 빈(Bean) 객체 생성시점에 호출 <br>
+destroy() : 빈(Bean) 객체 소멸시점에 호출 <br>
 → 빈(Bean)객체의 생성시점과 소멸시점에 작업하고 싶으면 위의 메소드를 쓰면 됨 <br>
 Ex) 인증 <br>
 
+> 실습
+```java
+# appCtx.xml
+ <context:annotation-config />
 
+ <bean id="bookDao" class="com.brms.book.dao.BookDao" />
+ <bean id="bookRegisterService" class="com.brms.book.service.BookRegisterService"/>
+ <bean id="bookSearchService" class="com.brms.book.dao.BookSearchService" />
+ <bean id="memberDao" class="com.brms.member.dao.MemberDao" />
+ <bean id="memberRegisterService" class="com.brms.member.service.MemberRegisterService"/>
+ <bean id="memberSearchService" class="com.brms.member.service.MemberSearchService" />
 
+```
+bookRegisterService가 스프링 컨테이너에 생성될 때 특정한 작업이 하고 싶다 → InitializingBean과 DisposableBean을 가지고 빈객체가 생성/소멸 될 때 특정한 작업 <br>
+특정한 작업 Ex) 아이디와 비밀번호를 가지고 DB 인증 절차 / 특정 네트워크 상에 있는 자원을 끌어온다 <br>
+```java
+public class bookRegisterService implements InitializingBean, DisposableBean{
+
+	@Autowired
+	private BookDao bookDao;
+
+	public BookRegisterService(){}
+
+	public void register(Book book){
+		bookDao.insert(book);
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exceoption{
+		System.out.println("Bean 객체 생성");
+	}
+
+	@Override
+	public void destroy() throws Exception{
+		System.out.println("Bean 객체 소멸");
+	}
+}
+```
 - 11-3 : init-method, destroy-method 속성
+→ 빈(Bean) 객체를 생성할 때 속성값을 넣어줄 수 있다. <br>
+```java
+#.xml
+<bean id="memberRegisterService" class="com.brms.member.service.MemberRegisterService" init-method="initMethod" destroy-method="destroyMethod" />
+```
+```java
+#MemberRegisterService.java
+public class MemberRegisterService{
 
+	@Autowired
+	private MemberDao memberDao;
 
+	public MemberRegisterService(){ }
 
+	public void register(Member member){
+		memberDao.insert(member);
+	}
 
+	public void initMethod(){
+		System.out.println(" -- initMethod() -- ");
+	}
 
-
-
+	public void destroyMethod(){
+		System.out.println(" -- destroyMethod() -- ");
+	}
+}
+```
 
 --------
 > 2019-01-22
