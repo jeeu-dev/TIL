@@ -6,16 +6,16 @@ Spring
 > 2019-01-23
 ### 9. 의존객체 자동 주입
 - 9-1 : 의존 객체 자동 주입이란? <br>
-→ 스프링 설정 파일에서 의존 객체를 주입할 때 <code><constructor-org></code> 또는 <code><property></code> 태그로 의존 대상 객체를 명시하지 않아도 스프링 컨테이너가 자동으로 필요한 의존 대상 객체를 찾아서 의존 대상 객체가 필요한 객체에 주입해 주는 기능이다. <br>
+→ 스프링 설정 파일에서 의존 객체를 주입할 때 <code>constructor-org</code> 또는 <code>property</code> 태그로 의존 대상 객체를 명시하지 않아도 스프링 컨테이너가 자동으로 필요한 의존 대상 객체를 찾아서 의존 대상 객체가 필요한 객체에 주입해 주는 기능이다. <br>
 → 구현 방법은 <code>@Autowired</code>와 <code>@Resource</code>어노테이션을 이용해서 쉽게 구현할 수 있다.
 
-- 9-2 : @Autowired
+- 9-2 : @Autowired <br>
 → 주입하려고 하는 <b>객체의 타입</b>이 일치하는 객체를 자동으로 주입한다.
 → "<b>타입</b>을 보고 <b>자동</b>으로 넣어준다"
 
 → xml에 <code>bean</code>만 추가하고(따로 contructor-arg 명시 X) class에서 <code>@Autowired</code>를 추가한다.
 
-→ 생성자의 Autowired를 쓸 때는 그냥 쓰면 됨. 단, property나 method에 쓸 때는 반드시 default 생성자를 명시해줘야 함!
+→ 생성자의 Autowired를 쓸 때는 그냥 쓰면 됨. <br>단, property나 method에 쓸 때는 반드시 default 생성자를 명시해줘야 함!
 ```java
 #Default 생성자
 pulic WordRegisterService(){
