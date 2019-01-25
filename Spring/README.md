@@ -5,7 +5,36 @@ Spring
 --------
 > 2019-01-25
 ### 12-1. 어노테이션을 이용한 스프링 설정-1
-#### 12-1-1 : xml파일을 Java파일로 변경하기
+#### 12-1-1 : xml파일을 Java파일로 변경하기 <br>
+- xml 코드를 java파일에서 어떻게 표현할 수 있을까 <br>
+→ java 파일이 xml을 대신해서 스프링 컨테이너를 생성할 수 있어야 한다. <br>
+→ MemberConfig(.java)파일이 스프링 컨테이너를 생성할 수 있습니다 라고 명시해줘야 함 → 이 때 사용하는 어노테이션이 <code>@Configuration</code> <br>
+→ 또한 java 파일에서는 빈(Bean) 태그의 class명, id값 순으로 적어준다. <br>
+→ 또한, <code>@Bean</code> 어노테이션을 달아준다. <br>
+```java
+@Configuration
+public class MemberConfig{
+	//<bean id="studentDao" class="ems.member.dao.StudentDao"></bean>
+	@Bean
+	public StudentDao studentDao(){ //Bean Tag Class, id
+		return new StudentDao();
+	}
+}
+```
+→ constructor-arg로 받을 경우 <br> 
+```java
+	/*
+	<bean id="registerService" class="ems.member.service.StudentRegisterService">
+	  <constructor-arg ref="studentDao"></constructor-arg>
+	</bean> */
+	@Bean
+	public StudentRegisterService registerService(){ //Bean Tag Class, id
+		return new StudentRegisterService(studentDao); //ref
+	}
+```
+
+
+
 
 
 
