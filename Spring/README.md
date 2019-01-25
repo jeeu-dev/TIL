@@ -32,11 +32,116 @@ public class MemberConfig{
 		return new StudentRegisterService(studentDao); //ref
 	}
 ```
+→ property의 경우 <br>
+```java
+// .xml
+<bean id="dataBaseConnectionInfoDev" class="ems.member.dataBaseConnectionInfo">
+ <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe" />
+ <property name="userId" value="scott" />
+ <property name="userPd" value="tiger" />
+</bean>
+```
+→
+```java
+//.java
+@Bean
+public DataBaseConnectionInfo dataBaseConnectionInfoDev(){
+	DaaBaseConnectionInfo inforDev = new DataBaseConnectionInfo();
+	inforDev.setJdbcUrl("jdbc:oracle:thin:@localhost:1521:xe");
+	inforDev.setUserId("scott");
+	inforDev.setUserPw("tiger");
 
+	return inforDev;
+}
+```
+→ value, list, map을 넣어줄 경우 <br>
+```java
+/*
+//.xml
+<bean id="informationService" class="ems.member.service.EMSInformationService">
+ <property name="ver">
+   <value>The version is 1.0</value>
+ </property>
+ <property name="sYear">
+   <value>2015</value>
+ </property>
+ <property name="sMonth">
+   <value>1</value>
+ </property>
+ <property name="developers" />
+   <list>
+     <value>Cheney.</value>
+     <value>Eloy.</value>
+     <value>Jasper.</value>
+   </list>
+ </property>
+ <property name="administrators">
+   <map>
+     <entry>
+       <key>
+         <value>Cheney</value>
+       </key>
+       <value>cheney@springPjt.org</value>
+     </entry>
+     <entry>
+       <key>
+         <value>Jasper</value>
+       </key>
+       <value>jasper@springPjt.org</value>
+     </entry>
+   </map>
+ </property>
+ <property name="dbInfos">
+   <map>
+     <entry>
+        <key>
+          <value>dev</value>
+        </key>
+        <ref bean="dataBaseConnectionInfoDev" />
+     <entry>
+   </map>
+ </property>
+</bean>
+*/
 
+//.java
+@Bean
+public EMSInformationService informationService(){
+	EMSInformationService info = new EMSInformationService();
 
+	//EMSInformationService.java 참고
+	info.setVer("The version is 1.0");
+	info.setsYear(2015);
+	info.setsMonth(1); 
 
+	ArrayList<String> developers = new ArrayList<String>();
+	developers.add("Cheney.");
+	developers.add("Eloy.");
+	developers.add("Jasper.");
+	info.setDevelopers(developers);
+    
+    Map<String, String> administrators = new HashMap<String, String>();
+    administrators.put("Cheny", "cheney@springPjt.org");
+    administrators.put("Jasper", "jasper@springPjt.org");
+    info.setAdministrators(administrators);
 
+    Map<String, DataBaseConnectionInfo> dbInfos = new HashMap<String, DataBaseConnectionInfo>();
+    dbInfos.put("dev", dataBaseConnectionInfoDev());
+    info.setDbinfos(dbInfos);
+
+	return info;
+}
+```
+→ 기존에 MainClassUseXml.java에서 아래의 코드를 사용하였다.<br>
+```java
+// MainClassUseXml.java
+GenericXmlApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationContext.xml");
+```
+→ 그런데 .java 파일 즉, MemberConfig.java 파일에서 .xml 대신 빈(Bean) 객체를 생성해주고 있으므로, MainClassUseXml.java에서 다른 선언이 필요하다. <br>
+```java
+// MainClassUseXml.java
+AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(MemberConfig.class);
+```
 
 
 --------
