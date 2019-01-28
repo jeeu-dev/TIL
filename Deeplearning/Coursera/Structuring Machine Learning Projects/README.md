@@ -7,4 +7,5 @@ Deep Learning
 > 2019-01-28
 * Structuring Machine Learning Projects <br>
 >> Training and testing on different distributions
-- 
+>> Bias and Variance with mismatched data distributions
+- Cat Classifier example

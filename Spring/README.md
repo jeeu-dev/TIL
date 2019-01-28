@@ -9,9 +9,152 @@ Spring
 - 기존에 xml 파일을 만들어서 사용했고, 그것을 분리할 수 있었다.
 - 똑같은 방식으로, java 파일도 분리해서 사용할 수 있다. 
 - Ex) dao / service 객체 / db관련 / util 등 기능별로 구분
-- 
+- MemberConfig1에서 @Bean으로 생성한 객체가 MemberConfig2에서 필요 → @Autowired로 주입해준다.
+```java
+//MainClassUseContifration.java
+AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(MemberConfig1.class, MemberConfig2.class, MemberConfig3.class);
+```
 
 #### 12-2-2 @Import 이노테이션
+```java
+@Configuration
+@Import({MemberConfig2, MemberConfig3})
+public class MemberConfig1{
+	... 
+```
+- import 구문을 안쓰는 것은 아니나, 많이 써보진 않음
+
+### 13. 웹프로그래밍 설계모델
+#### 13-1 웹프로그래밍을 구축하기 위한 설계 모델
+- Model1 방식 <br>
+Client <-> WAS(JSP<->Service&DAO)) <-> DB
+→ 개발 속도가 빠름 / 유지보수가 어렵다.
+- Model2 방식 (MVC) <br>
+Client <-> WAS(Controller(<->View(JSP))<->Service(모듈화)<->DAO(모듈화))<->model<->DB <br>
+
+#### 13-2 스프링 MVC 프레임워크 설계 구조
+Client → DispatcherServlet <-> HanlderMapping / HandlerAdapter<->Controller <br>
+	   → View → Client(응답 JSP) <br>
+	   → ViewResolver <br>
+
+HandlerMapping : 가장 적합한 Controller를 찾는다. <br>
+HandlerAdapter : Controller 내에 적합한 Method를 찾는다. <br>
+ViewResolver : 가장 적합한 JSP 페이지(View)를 찾는다. <br>
+
+#### 13-3 DispatcherServlet 설정
+- 사거리의 신호등과 같다.
+- web.xml이 생소하면 JSP/Servlet 자료를 검색해서 선행학습하고 오세요.
+```java
+<servlet>
+ <servlet-name>appServlet</servlet-name>
+ <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+ <init-param>
+  <param-name>contextConfigLocation</param-name>
+  <param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value> //스프링 설정파일
+ </init-param>
+ <load-on-startup>1</load-on-startup>
+</servlet>
+```
+- 내가 실제로 작업할 것은 controller이랑 view 밖에 없다. 
+
+#### 13-4 Controller 객체 - @Controller
+DispatcherServlet <-> HandlerAdapter <-> Controller <br>
+- Controller 객체로 사용할 클래서 정의 → 스프링 설정파일에 <code>annotation-driven</code> 후 <code>@Controller</code> <br>
+```java
+//servlet-context.xml
+
+<annotation-driven />
+```
+
+```java
+@Controller
+public class HomeController{
+	...
+}
+```
+
+#### 13-5 Controller 객체 - @RequestMapping
+DispatcherServlet <-> HandlerAdapter <-> Controller <br>
+- Controller 안에 있는 Method는 <code>@RequestMapping</code> 어노테이션을 통해 매핑시켜준다. <br>
+```java
+@RequestMapping("/success")
+public String success(Model model){
+
+	return "success";
+}
+```
+
+#### 13-6 Controller 객체 - Model 타입의 파라미터
+DispatcherServlet <-> HandlerAdapter <-> Controller <-> Service / DAO / Etc. <br>
+```java
+@RequestMapping("/success")
+public String success(Model model){
+```
+```java
+model.setAttribute("tempData", "model has data!!");
+```
+→ 개발자는 Model 객체에 데이터를 담아서 DispatcherServlet에 전달할 수 있다.
+→ DispatcherServlet에 전달된 Model 데이터는 View에 가공되어 클라이언트한테 응답처리 된다.
+
+#### 13-7 View 객체
+DispatcherServlet <-> ViewResolver <-> View <br>
+```java
+<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> //View를 찾는 viewResolver
+ <beans:property name="prefix" value="/WEB-INF/views/" />
+ <beans:property name="suffix" value=".jsp" />
+</beans:bean>
+```
+→ JSP 파일명 : /WEB-INF/views/success.jsp
+
+#### 13-8 전체적인 웹프로그래밍 구조
+최초 사용자(Client) 요청(Ex: http://localhost:8090/ch08/success) → DispatcherServlet(받음) / 스프링 프레임워크에 있는 것으로, web.xml에서 servlet 등록을 하고, 초기 파라미터로 스프링 설정파일을 설정한다. / Controller를 찾는다.(HandlerMapping이 찾는다. @Controller 어노테이션으로 Controller를 만듦) 적합한 Controller를 찾음 <br> → 다시 DispaterServlet으로 감. → 적합한 Method를 찾기 시작. <br> → 사용자 요청에 해다당하는 메서드 실행(Ex: @RequestMapping("success") 어노테이션이 적용된 메서드 검색 및 실행 - Service -> DAO -> DB) → Model과 View의 형태로 Dispatcher Servlet으로 감. <br> → View 검색(Ex : ViewResolver에 의해서 검색된 Success.jsp 검색 및 실행 ) → View (Ex : 브라우저에 JSP를 이용한 응답) 
+
+### 14. 스프링 MVVC 웹서비스 - 1
+#### 14-1 웹 서버(Tomcat) 다운로드
+[tomcat](https://tomcat.apache.org)
+
+#### 14-2 웹 서버(Tomcat)와 이클립스 연동
+- servers Tab → Apache - Tomcat v8.0 Server
+- 더블클릭 → Server Locations - Use Tomcat installation
+- Server Options - Publish module contexts to separate XML files Check
+- Ports - HTTP/1.1 - 8090으로 수정 / 나중에 DB로 Oracle을 쓸건데 Oracle 내부 프로토콜이 8080이라서 충돌 방지
+- Server Synchronized
+- Start the Server
+- localhost:8090 == 127.0.0.1:8090
+
+#### 14-3 이클립스에 STS(Spring Tool Suit) 설치
+- Eclipse Maketplace → Spring Tool Suit
+
+#### 14-4 STS를 이용한 웹프로젝트 생성
+- New Spring Legacy Project → Spring MVC Project → Project Setting "com.pjt.pjt14"
+
+#### 14-5 스프링 MVC프레임워크를 이용한 웹프로젝트 분석
+- src/java/com/pjt/pjt14/HomeController.java
+
+### 15. 스프링 MVC 웹서비스 - 2
+#### 15-1 프로젝트 전체 구조
+
+
+
+#### 15-2 web.xml
+
+
+
+#### 15-3 DispatcherServlet
+
+
+
+#### 15-4 servlet-context.xml
+
+
+
+#### 15-5 Controller(컨트롤러)
+
+
+
+#### 15-6 View(뷰)
+
+
 
 
 
