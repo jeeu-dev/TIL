@@ -10,9 +10,9 @@ Deep Learning
 >> Bias and Variance with mismatched data distributions
 - train / training-dev / dev / test로 나눔 
 - train & training-dev는 같은 분포 / dev랑 test 같은 분포
-- More general formulation
-      | General speech recognition  |  Rear view mirror speech data  
- ---- |---|---
+- More general formulation <br>
+    | General speech recognition  |  Rear view mirror speech data  
+--- | --- | ---
  Human level                    |  "Human level" 4%  |      
- Error on example trained on    |  "Traing Eror" 7%  |       
- Error on example not trained on|  "Traing-dev error" 10% |        
+ Error on example trained on    |  "Traing Eror" 7%  |   
+ Error on example not trained on|  "Traing-dev error" 10% |  "Dev/Test error" 6%
