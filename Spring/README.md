@@ -93,7 +93,7 @@ public String success(Model model){
 ```java
 model.setAttribute("tempData", "model has data!!");
 ```
-→ 개발자는 Model 객체에 데이터를 담아서 DispatcherServlet에 전달할 수 있다.
+→ 개발자는 Model 객체에 데이터를 담아서 DispatcherServlet에 전달할 수 있다. <br>
 → DispatcherServlet에 전달된 Model 데이터는 View에 가공되어 클라이언트한테 응답처리 된다.
 
 #### 13-7 View 객체
@@ -107,11 +107,11 @@ DispatcherServlet <-> ViewResolver <-> View <br>
 → JSP 파일명 : /WEB-INF/views/success.jsp
 
 #### 13-8 전체적인 웹프로그래밍 구조
-최초 사용자(Client) 요청(Ex: http://localhost:8090/ch08/success) → DispatcherServlet(받음) / 스프링 프레임워크에 있는 것으로, web.xml에서 servlet 등록을 하고, 초기 파라미터로 스프링 설정파일을 설정한다. / Controller를 찾는다.(HandlerMapping이 찾는다. @Controller 어노테이션으로 Controller를 만듦) 적합한 Controller를 찾음 <br> → 다시 DispaterServlet으로 감. → 적합한 Method를 찾기 시작. <br> → 사용자 요청에 해다당하는 메서드 실행(Ex: @RequestMapping("success") 어노테이션이 적용된 메서드 검색 및 실행 - Service -> DAO -> DB) → Model과 View의 형태로 Dispatcher Servlet으로 감. <br> → View 검색(Ex : ViewResolver에 의해서 검색된 Success.jsp 검색 및 실행 ) → View (Ex : 브라우저에 JSP를 이용한 응답) 
+최초 사용자(Client) 요청(Ex: http://localhost:8090/ch08/success) <br> → DispatcherServlet(받음) / 스프링 프레임워크에 있는 것으로, web.xml에서 servlet 등록을 하고, 초기 파라미터로 스프링 설정파일을 설정한다. / Controller를 찾는다.(HandlerMapping이 찾는다. @Controller 어노테이션으로 Controller를 만듦) 적합한 Controller를 찾음 <br> → 다시 DispaterServlet으로 감. → 적합한 Method를 찾기 시작. <br> → 사용자 요청에 해당하는 메서드 실행(Ex: @RequestMapping("success") 어노테이션이 적용된 메서드 검색 및 실행 - Service -> DAO -> DB) → Model과 View의 형태로 Dispatcher Servlet으로 감. <br> → View 검색(Ex : ViewResolver에 의해서 검색된 Success.jsp 검색 및 실행 ) → View (Ex : 브라우저에 JSP를 이용한 응답) 
 
 ### 14. 스프링 MVVC 웹서비스 - 1
 #### 14-1 웹 서버(Tomcat) 다운로드
-[tomcat](https://tomcat.apache.org)
+- [Tomcat](https://tomcat.apache.org)
 
 #### 14-2 웹 서버(Tomcat)와 이클립스 연동
 - servers Tab → Apache - Tomcat v8.0 Server
@@ -133,31 +133,75 @@ DispatcherServlet <-> ViewResolver <-> View <br>
 
 ### 15. 스프링 MVC 웹서비스 - 2
 #### 15-1 프로젝트 전체 구조
-
-
+- java파일 : java파일들이 위치한다. 주로 패키지로 묶어서 관리한다. 웹 어플리케이션에서 사용되는 Controller, Service, DAO 객체들이 위치한다.
+- webbapp : 웹과 관련된 파일을(스프링 설정파일, JSP파일, HTML파일 등)이 위치한다.
+- resources : JSP파일을 제외한 html, css, js파일 등이 위치한다.
+- spring 폴더 : 스프링 컨테이너를 생성하기 위한 스프링 설정파일이 위치한다.(servlet-context.xml 등)
+- views 폴더 : View로 사용될 JSP 파일이 위치한다.
+- pom.xml 파일 : 메인 레파지토리에서 프로젝트에 필요한 라이브러리를 내려받기 위한 메이븐 설정 파일
 
 #### 15-2 web.xml
-
-
+- 웹 어플리케이션에서 최초 사용자의 요청이 발생하면 가장 먼저 DispatcherServlet이 사용자의 요청을 받는다고 하였다. 따라서 개발자는 DispatcherServlet을 서블릿으로 등록해주는 과정을 설정해주어야 한다. 그리고 사용자의 모든 요청을 받기 위해서 서블릿 맵핑 경로는 '/'로 설정한다.
+- (1) HandlerMapping → DispatcherServlet → (2)HandlerAdapter → Controller → HandlerAdapter → DispatcherServlet → (3) ViewResolver → View
+- 마지막으로 정리하자면, 요청이 들어오면 web.xml은 DispatcherServlet을 Servlet으로 등록시키고, Servlet으로 등록된 DispatcherServlet은 HandlerMaping(적절한 Controller 찾음), HandlerAdapter(적당한 method 찾음), ViewResolver(적당한 View 찾음)을 통해 웹서비스를 구현한다.
 
 #### 15-3 DispatcherServlet
-
-
+- 사용자의 모든 요청을 <code>DispatcherServlet</code>이 받은 후 <code>HandlerMapping</code> 객체에 Controller 객체 검색을 요청한다. 그러면 <code>HandlerMapping</code> 객체는 프로젝트에 존재하는 모든 <b>Controller</b> 객체를 검색한다. <code>HandlerMapping</code> 객체가 <b>Controller</b> 객체를 검색해서 <code>DispatcherServlet</code> 객체에 알려주면 <code>DispatcherServlet</code> 객체는 다시 <code>HandlerAdapter</code> 객체에 사용자의 요청에 부합하는 메소드 검색을 요청한다. 그러면 <code>HandlerAdapter</code> 객체는 사용자의 요청에 부합하는 메소드를 찾아서 해당 <b>Controller</b> 객체의 메소드를 실행한다. <b>Controller</b> 객체의 메소드가 실행된 후 <b>Controller</b> 객체는 <code>HandlerAdapter</code> 객체에 <b>ModelAndView</b> 객체를 반환하는데 <b>ModelAndView</b> 객체에는 사용자 응답에 필요한 데이터정보와 뷰정보(JSP파일)가 담겨있다. 다음으로 <code>HandlerAdapter</code> 객체는 <b>ModelAndView</b> 객체를 다시 <code>DispatcherServlet</code> 객체에 반환한다. <br>
+→ HandlerMapping : 사용자의 요청에 부합하는 컨트롤러 검색 <br>
+→ HandlerAdapter : 사용자의 요처에 부합하는 컨트롤러의 메서드 실행 요청 <br>
+→ Controller : Bussiness 로직 수행 <br>
 
 #### 15-4 servlet-context.xml
+→ Servlet으로 등록될 때 contextConfigLocation 이름으로 초기화 파라미터를 servlet-context.xml로 지정하고 있는데 이 때 지정된 servlet-context.xml파일이 스프링 설정의 역할을 하는 파일이다. <br>
+```java
+//servlet-context.xml
+<resources mapping="/resources/**" location="/resources/" />
 
-
+<beans:property name="prefix" value="/WEB-INF/views/" />
+<beans:property name="suffix" value=".jsp" />
+```
 
 #### 15-5 Controller(컨트롤러)
+- Controller → Service → DAO <br>
+- 사용자의 요청을 실제로 처리하는 객체들(실제로 개발자의 공수가 많이 투입된다.)
+```java
+@Controller
+public class HomeController{
 
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public String home(Locale locale, Model model){
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
+		String formattedDate = dateFormat.format(date);
+
+		model.addAttribute("serverTime", formattedDate);
+
+		return "home";
+	}
+}
+```
+→
+```java
+@RequestMapping("/success") //사용자로부터 '/success'요청이 발생하면 success() 메서드를 실행 // 사용자 요청에 대한 URL
+public String success(Model model){ // success() 메서드 실행 후 뷰에서 활용되는 데이터를 담고 있는 객체
+
+	return "success"; // 뷰로 사용되는 JSP 파일 이름
+}
+```
 
 #### 15-6 View(뷰)
-
-
-
-
-
+→ 메서드 반환값
+```java
+return "hoem";
+```
+→ JSP 파일
+```java
+/WEB-INF/views/home.jsp
+```
+→ 사용자 응답 브라우저 <br>
+<code>http://localhost:8090/lec14/</code> <br>
+ 
 --------
 > 2019-01-25
 ### 12-1. 어노테이션을 이용한 스프링 설정-1
