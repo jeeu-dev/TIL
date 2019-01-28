@@ -8,4 +8,11 @@ Deep Learning
 * Structuring Machine Learning Projects <br>
 >> Training and testing on different distributions
 >> Bias and Variance with mismatched data distributions
-- Cat Classifier example
+- train / training-dev / dev / test로 나눔 
+- train & training-dev는 같은 분포 / dev랑 test 같은 분포
+- More general formulation
+      | General speech recognition  |   Cool  
+ ---- |---|---
+ Human level                    |    |      
+ Error on example trained on    |        |       
+ Error on example not trained on|         |        
