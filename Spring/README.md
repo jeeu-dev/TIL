@@ -3,6 +3,103 @@ Spring
 
 > 자료 : 자바 스프링 프레임워크(ver.2018) – 신입 프로그래머를 위한 [강좌](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC_renew/)<br>
 --------
+> 2019-01-29
+### 16. STS를 이용하지 않은 웹 프로젝트
+#### 16-1 스프링 MVC 웹 애플리케이션 제작을 위한 폴더 생성
+C:\spinrg\pjt\lec16Pjt001\sec
+C:\spinrg\pjt\lec16Pjt001\sec\main
+C:\spinrg\pjt\lec16Pjt001\sec\main\java
+C:\spinrg\pjt\lec16Pjt001\sec\main\webapp
+C:\spinrg\pjt\lec16Pjt001\sec\main\webapp\resources
+C:\spinrg\pjt\lec16Pjt001\sec\main\webapp\WEB-INF
+C:\spinrg\pjt\lec16Pjt001\sec\main\webapp\WEB-INF\spring
+C:\spinrg\pjt\lec16Pjt001\sec\main\webapp\WEB-INF\views
+
+#### 16-2 pom.xml 및 이클립스 import
+
+#### 16-3 web.xml 작성
+
+#### 16-4 스프링 설정 파일(servlet-context.xml) 작성
+/WEB-INF/spinrg/appServlet/servlet-context.xml
+
+#### 16-5 root-context.xml 작성
+
+#### 16-6 컨트롤러와 뷰 작성
+```java
+@Controller
+public class HomeController{
+
+	@RequestMapping("/")
+	public String home(Model model){
+
+		System.out.println("--- home() method ---")''
+
+		model.addAttribute("key", "home value");
+
+		return "home";
+	}
+
+	@RequestMapping("/login")
+	public String login(Model model){
+
+		System.out.println("--- login() method ---")''
+
+		model.addAttribute("key", "login value");
+
+		return "login";
+	}
+}
+```
+
+```html
+<html>
+<head>
+	<title>Home</title>
+</head>
+<body>
+<h1>
+	Hello world! <br>
+	key is${key}
+</h1>
+</body>
+</html>
+```
+```html
+<html>
+<head>
+	<title>Login</title>
+</head>
+<body>
+<h1>
+	Hello world! <br>
+	key is${key}
+</h1>
+</body>
+</html>
+```
+
+#### 16-7 실행
+
+### 17. Service & Dao 객체 구현
+#### 17-1 웹 어플리케이션 준비
+
+
+
+#### 17-2 한글 처리
+
+
+
+#### 17-3 서비스 객체 구현
+
+
+
+#### 17-4 DAO 객체 구현
+
+
+
+
+
+--------
 > 2019-01-28
 ### 12-2. 어노테이션을 이용한 스프링 설정 - 2
 #### 12-2-1 Java 파일분리
