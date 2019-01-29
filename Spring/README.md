@@ -82,18 +82,138 @@ public class HomeController{
 
 ### 17. Service & Dao 객체 구현
 #### 17-1 웹 어플리케이션 준비
-
-
+<b>사용자요청(브라우저) → 프론트 컨트롤러(DispatcherServlet)(←→뷰(jsp파일)) → 컨트롤러 → 서비스 → DAO(Data Access Object) → Database </b>
 
 #### 17-2 한글 처리
+```xml
+<!-- web.xml -->
+<filter>
+  <filter-name>encodingFilter</filter-name>
+  <filter-Class>
+    org.springframework.web.filter.CharacterEncodingFilter
+  </filter-Class>
+  <init-param>
+    <param-name>encoding</param-name>
+    <param-value>UTF-8</param-value>
+  </init-param>
+  <init-param>
+    <param-name>forceEncoding</param-name>
+    <param-value>true</param-value>
+  </init-param>
+</filter>
 
+<filter-mapping>
+  <filter-name>encodingFilter</filter-name>
+  <url-pattern>/*</url-pattern>
+</filter-mapping>
 
+```
+→ 프로젝트 할 때 딱 한번만 쓰니까 재활용하자~
 
 #### 17-3 서비스 객체 구현
-
-
+- 방법 1 : new 연산자를 이요한 service 객체 생성 및 참조
+```java
+MemberService service = new MemberService();
+```
+- 방법 2 : 스프링 설정 파일을 이용한 서비스 객체 생성 및 의존 객체 자동 주입
+```java
+<beans:bean id="service" class="com.bs.lec17.member.service.MemberService"></beans:bean>
+```
+↓
+```java
+@Autowired
+MemberService service;
+```
+- 방법 3 : 어노테이션을 이용해서 서비스 객체 생성 및 의존 객체 자동 주입 / <code>@Service</code>, <code>@Component</code>, <code>@Repository</code> 중 어느 것을 써도 무방함
+```java
+@Repository("memService")
+public class MemberService implements IMemberService(){
+```
+↓
+```java
+@Resource(name="memService")
+MemberService service;
+```
 
 #### 17-4 DAO 객체 구현
+- 방법 : 어노테이션을 이용해서 DAO 객체 생성 및 의존 객체 자동 주입
+```java
+@Repository
+public class MemberDao implements IMemeberDao{
+```
+↓
+```java
+@Autowired
+MemberDao dao;
+```
+
+### 18. Controller 객체 구현
+#### 18-1 웹 어플리케이션 준비
+- src/main/java <br>
+컨트롤러 객체 <br>
+DAO(Data Access Object) <br>
+서비스 객체
+- src/main/webapp/resources/html <br>
+웹 컴포넌트
+- ../WEB-INF/views
+뷰(JSP) 컴포넌트 <br>
+
+#### 18-2 @RequestMapping을 이용한 URL 맵핑
+```java
+@Controller
+@RequestMapping("/member")
+public class MemberController{
+	@Resource(name="memService")
+	MemberService service;
+
+	@RequestMapping(value="/memJoin", method=RequestMethod.POST)
+	public String memJoin(Model model, HttpServletRequest request){
+		String memId = request.getParameter("memId");
+		String memPw = request.getParameter("memPw");
+		String memMail = request.getParameter("memMail");
+		String memPhone1 = request.getParameter("memPhone1");
+		String memPhone2 = request.getParameter("memPhone2");
+		String memPhone3 = request.getParameter("memPhone3");
+
+		service.memberRegister(memId, memPw, memMail, memPhone1, memPhone2, memPhone3);
+
+		model.addAttribute("memId", memId);
+		model.addAttribute("memPw", memPw);
+		model.addAttribute("memMail", memMail);
+		model.addAttribute("memPhone", memPhone1 + "-" + memPhone2 + "-" + memPhone3);
+
+		return "memJoinOk";
+	}
+}
+
+```
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Member Join</h1>
+	<form action="/lec17/memJoin" method="post">
+		ID : <input type="text" name="memId" ><br />
+		PW : <input type="password" name="memPw" ><br />
+		MAIL : <input type="password" name="memMail" ><br />
+		PHONE : <input type="text" name="memPhone1" size="5"> - 
+				<input type="text" name="memPhone2" size="5"> - 
+				<input type="text" name="memPhone3" size="5"><br />
+		<input type="submit" value="Join">
+		<input type="reset" value="Cancel">
+	</form>
+	<a href="/lec17/resources/html/login.html">LOGIN</a> &nbsp;&nbsp; <a href="/lec17/resources/html/memjoin.html">JOIN</a>
+</html>
+```
+
+
+
+#### 18-3 요청 파라미터
 
 
 
