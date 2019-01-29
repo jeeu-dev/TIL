@@ -161,7 +161,7 @@ DAO(Data Access Object) <br>
 #### 18-2 @RequestMapping을 이용한 URL 맵핑
 ```java
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/member") 
 public class MemberController{
 	@Resource(name="memService")
 	MemberService service;
@@ -211,13 +211,120 @@ public class MemberController{
 </html>
 ```
 
-
-
 #### 18-3 요청 파라미터
+- HttpServletRequest 객체를 이용한 HTTP 전송 정보 얻기 
+```html
+ID : <input type="text" name="memId">
+```
+```java
+	@RequestMapping(value="/memLogin", method=RequestMethod.POST)
+	public String memLogin(Model model, HttpServletRequest request){  // 추가된 곳 
 
+	String memId = request.getParameter("memId");
+```
+- @RequestParam 어노테이션을 이용한 HTTP 전송 정보 얻기
+```html
+ID : <input type="text" name="memId">
+PW : <input type="password" name="memPw">
+```
+```java
+	@RequestMapping(value="/memLogin", method=RequestMethod.POST)
+	public String memLogin(Model model, @RequestParam("memId") String memId, @RequestParam("memPw") String memPw){  // 추가된 곳 
+		//@RequestParam(value="memPw", required=false, defautValue="1234") // 이 속성도 이용할 수 있다 // 잘 사용안함
 
+		// String memId = request.getParameter("memId");
+		// String memPw = request.getParameter("memPw");
+ 
+		Member member = service.memberSearch(memId, memPw);
 
+		try{
+			model.addAttribute("memId", member.getMemId());
+			model.addAttribute("memPw", member.getMemPw());
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 
+		return "memLoginOk";
+	}
+```
+- 커멘드 객체를 이용한 HTTP 전송 정보 얻기 
+<b>→ 가장 대중적</b>
+```html
+//memJoin.html
+ID : <input type="text" name="memId"> <br />
+PW : <input type="password" name="memPw"> <br />
+MAIL : <input type="text" name="memMail"> <br />
+```
+```java
+//Member.java
+	public void setMemId(String memId){
+		this.memId = memId;
+	}
+
+	public void setMemPw(String memPw){
+		this.memPw = memPw;
+	}
+
+	public void setMemMail(String memMail){
+		this.memMail = memMail;
+	}
+```
+
+```java
+//Controller.java
+	@RequestMapping(value="/memJon", method=RequestMethod.POST)
+	public String memJoin(Member member){
+		...
+	}
+```
+↓ 이렇게
+```java
+@Controller
+@RequestMapping("/member") 
+public class MemberController{
+	@Resource(name="memService")
+	MemberService service;
+
+	@RequestMapping(value="/memJoin", method=RequestMethod.POST)
+	public String memJoin(Member member){
+		// String memId = request.getParameter("memId");
+		// String memPw = request.getParameter("memPw");
+		// String memMail = request.getParameter("memMail");
+		// String memPhone1 = request.getParameter("memPhone1");
+		// String memPhone2 = request.getParameter("memPhone2");
+		// String memPhone3 = request.getParameter("memPhone3");
+
+		service.memberRegister(member.getMemId(), member.getMemPw(), member.getMemMail(), member.getMemPhone1(), member.getMemPhone2(), member.getMemPhone3());
+
+		// model.addAttribute("memId", memId);
+		// model.addAttribute("memPw", memPw);
+		// model.addAttribute("memMail", memMail);
+		// model.addAttribute("memPhone", memPhone1 + "-" + memPhone2 + "-" + memPhone3);
+
+		return "memJoinOk";
+	}
+}
+
+```
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+</head>
+<body>
+	<h1>memJoinOk</h1>
+		ID : ${member.memId}<br />
+		PW : ${member.memPw}<br />
+		MAIL : ${member.memMail}<br />
+		PHONE : ${member.memPhone1} - ${member.memPhone2} - ${member.memPhone3} <br />
+		<input type="submit" value="Join">
+		<input type="reset" value="Cancel">
+	</form>
+	<a href="/lec17/resources/html/login.html">LOGIN</a> &nbsp;&nbsp; <a href="/lec17/resources/html/memjoin.html">JOIN</a>
+</html>
+```
 
 --------
 > 2019-01-28
