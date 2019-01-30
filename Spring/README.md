@@ -215,7 +215,10 @@ public String memRemove(Member member, HttpServletRequest request){
  setMaxInactiveInterval() | 세션 객체의 유지시간을 설정한다.
  getMaxInactiveInterval() | 세션 객체의 유지시간을 반환한다.
  invalidate() | 세션 객체의 모든 정보를 삭제한다.
- 
+
+클라이언트 1. 서버 연결 및 요청 → 서버 2. setAttribute("member", mem) <br>
+세션 3. member 속성 저장 → 클라이언트 4. 응답 <br>
+클라이언트 5. 요청 → 서버 6. getAttribute("member") → 세션 7. member 속성 반환 → 클라이언트 8. 응답 <br>
 
 
 
