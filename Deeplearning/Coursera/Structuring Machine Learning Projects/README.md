@@ -27,7 +27,7 @@ Deep Learning
 - More general formulation <br>
 
  ＃| General speech recognition  |  Rear view mirror speech data | ＃
----| :---: | :---: | ---: 
+:---:| :---: | :---: | :---: 
 Human level | "Human level" 4% | 6% | ↑↓ Avoiable bias
 Error on example trained on | "Traing Eror" 7% | 6% | ↑↓ Variance
 Error on example not trained on| "Traing-dev error" 10% |  "Dev/Test error" 6% | ＃
