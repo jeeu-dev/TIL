@@ -206,7 +206,16 @@ public String memRemove(Member member, HttpServletRequest request){
 ```
 
 #### 20-5 세션 주요 메소드 및 플로어
-
+ 세션 메소드 | 기능 
+ :---:| :---:
+ getId() | 세션 ID를 반환한다.
+ setAttribute() | 세션 객체에 속성을 저장한다.
+ getAttribute() | 세션 객체에 저장된 속성을 반환한다.
+ removeAttribute() | 세션 객체에 저장된 속성을 제거한다.
+ setMaxInactiveInterval() | 세션 객체의 유지시간을 설정한다.
+ getMaxInactiveInterval() | 세션 객체의 유지시간을 반환한다.
+ invalidate() | 세션 객체의 모든 정보를 삭제한다.
+ 
 
 
 
@@ -217,7 +226,7 @@ public String memRemove(Member member, HttpServletRequest request){
  
 
 
- 
+
 
 --------
 > 2019-01-29
