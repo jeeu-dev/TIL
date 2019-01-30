@@ -3,6 +3,126 @@ Spring
 
 > 자료 : 자바 스프링 프레임워크(ver.2018) – 신입 프로그래머를 위한 [강좌](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC_renew/)<br>
 --------
+> 2019-01-30
+### 19. Controller 객체 구현 - 2
+#### 19-1 @ModelAttribute
+- @ModelAttribute를 이용하면 커멘드 객체의 이름을 변경할 수 있고, 이렇게 변경된 이름은 뷰에서 커멘드 객체를 참조할 때 사용된다. 
+```java
+//컨트롤러
+
+public String memberJoin(Member member)
+```
+↓
+```jsp
+//memJoinOk.jsp
+ID : ${member.memId}
+```
+- @ModelAttribute를 이용하여 값을 바로 뷰에서 이용할 수 있다.
+```java
+//.java
+@ModelAttribute("serverTime")
+public String getServerTime(Locale locale){
+```
+↓
+```jsp
+//.jsp
+<p> The time on the server is ${serverTime}. </p>
+```
+
+- 공통 데이터, 공통 메소드를 정할 수 있다.
+```java
+// 컨트롤러
+public String memRemove(@ModelAttribute("mem") Member memeber)
+```
+↓
+```jsp
+//.jsp
+ID : ${mem.memId}
+```
+
+#### 19-2 커맨드 객체 프로퍼티 데이터 타입
+- 데이터가 기초데이터 타입인 경우
+```html
+//memberJoin.html
+ID : <input type="text" name="memId">
+PW : <input type="password" name="memPw">
+MAIL : <input type="text" name="memMail">
+AGE : <input type="text" name="memAge" size="4" value="0">
+```
+↓
+```java
+//Member.java
+private String memId;
+private String memPw;
+private String memMail;
+private int memAge;
+```
+- 데이터가 중첩 커멘드 객체를 이용한 List 구조인 경우
+```html
+<!-- memberJoin.html -->
+PHONE1 : <input type="text" name="memPhones[0].memPhone1" size="5"> - <input type="text" name="memPhones[0].memPhone2" size="5"> - <input type="text" name="memPhones[0].memPhone3" size="5">
+PHONE2 : <input type="text" name="memPhones[1].memPhone1" size="5"> - <input type="text" name="memPhones[1].memPhone2" size="5"> - <input type="text" name="memPhones[1].memPhone3" size="5">
+```
+↓
+```java
+//Member.java
+private List<MemPhone> memPhones;
+```
+
+#### 19-3 Model & ModelAndView
+- 컨트롤러에서 뷰에 데이터를 전달하기 위해 사용되는 객체로 Model과 ModelAndView가 있다. 두 객체의 차이점은 Model은 <b>뷰에 데이터만</b>을 전달하기 위한 객체이고, ModelAndView는 <b>데이터와 뷰의 이름을 함께 전달</b>하는 객체이다. 
+- Model
+```java
+@RequestMapping(value="/memModify", method=RequestMethod.POST)
+public String memModify(Model model, Member member){
+
+	Member[] members = service.memberModify(member);
+
+	model.addAttribute("memBef", members[0]);
+	model.addAttribute("memAff", members[1]);
+
+	return "memModifyOk";
+}
+```
+↓ 뷰에 데이터만 전달
+```html
+<!-- memMofifyOk.jsp -->
+ID : ${memBef.memId}
+ID : ${memAff.memId}
+```
+- ModelAndView
+```java
+@RequestMapping(value="/memModify", method=RequestMethod.POST)
+public String memModify(Model model, Member member){
+
+	Member[] members = service.memberModify(member);
+
+	model.addAttribute("memBef", members[0]);
+	model.addAttribute("memAff", members[1]);
+
+	return "memModifyOk";
+}
+```
+↓ 아래와 같이 바뀌어야 한다.
+```java
+@RequestMapping(value="/memModify", method=RequestMethod.POST)
+public ModelAndView memModify(Member member){ // 데이터 타입 : ModelAndView
+
+	Member[] members = service.memberModify(member);
+
+	ModelAndView mav = new ModelAndView(); //ModelAndView 객체 생성
+	model.addAttribute("memBef", members[0]);
+	model.addAttribute("memAff", members[1]);
+
+	mav.setViewName("memModifyOk"); // 뷰의 이름을 set
+
+	return mav; // ModelAndView 객체(모델이름을 같이) 반환
+}
+```
+
+ 
+
+--------
 > 2019-01-29
 ### 16. STS를 이용하지 않은 웹 프로젝트
 #### 16-1 스프링 MVC 웹 애플리케이션 제작을 위한 폴더 생성
