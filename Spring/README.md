@@ -220,15 +220,47 @@ public String memRemove(Member member, HttpServletRequest request){
 세션 3. member 속성 저장 → 클라이언트 4. 응답 <br>
 클라이언트 5. 요청 → 서버 6. getAttribute("member") → 세션 7. member 속성 반환 → 클라이언트 8. 응답 <br>
 
-
-
-
-
 #### 20-6 쿠키(Cookie)
+- 세션과 쿠키는 동일하다 - 서버와 클라이언트의 연결을 유지시켜준다. but 쿠키는 클라이언트 즉, 사용자의 로컬 컴퓨터에 정보가 남아있게 된다.
+- 예제 : lec20Pjt002
+ - mallMain()에서 쿠키를 생성하고, 파라미터로 받은 HttpServletResponse에 쿠키를 담고 있다.
+ - 쿠키를 생성할 때는 생성자에 두 개의 파라미터를 넣어주는데 첫 번째는 쿠키이름을 넣어주고 두 번째는 쿠키값을 넣어 준다.
 
- 
+ ```java
+ @RequestMapping("/main")
+ public String mallMain(Mall mall, HttpServletResponse response){
 
+ 	Cookie genderCookie = new Cookie("gender", mall.getGender());
 
+ 	if(mall.isCookieDel()){
+ 		genderCookie.setMaxAge(0);
+ 		mall.setGender(null);
+ 	}else{
+ 		genderCookie.setMaxAge(60*60*24*30); // 유지해라
+ 	}
+ 	 response.addCookie(genderCookie);
+
+ 	 return "/mall/main";
+ }
+ ```
+
+- 예제 : lec20Pjt002
+ - mallMain()에서 생성된 쿠키를 mallIndex()에서 사용한다.
+ - 쿠키를 사용할 때는 @CookieValue를 사용한다.
+
+ ```java
+ @RequestMapping("/index")
+ public String mallIndex(Mall mall,
+ 	@CookieValue(value="gender", required=false) Cookie genderCookie, //value는 쿠키의 이름, required는 찾는 이름이 없으면 익셉션이 발생하는데, 없더라도 '익셉션이 발생하지 마라' 라고 하기 위해 false로 설정함
+ 	HttpServletRequest request){
+
+ 	if(genderCookie != null)
+ 		mall.setGender(genderCookie.getValue());
+
+ 	return "/mall/index";
+ }
+ ```
+- `@CookieValue`어노테이션의 value 속성은 쿠키 이름을 나타내는데, 만약 value에 명시한 쿠키가 없을 경우 익셉션이 발생한다. <br> 익셉션을 막는 방법이 있는데, 바로 required 속성이다. Required 속성은 기본값으로 true를 가지고 있는데 required가 true인 경우 value값에 해당하는 쿠키가 없으면 익셉션이 발생한다. <br> 따라서 requried 속성값을 false로 설정해서 value값에 해당하는 쿠키가 없어도 익셉션이 발생하지 않도록 한다.
 
 
 --------
