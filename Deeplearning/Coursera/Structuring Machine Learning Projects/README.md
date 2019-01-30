@@ -26,9 +26,9 @@ Deep Learning
 - train & training-dev는 같은 분포 / dev랑 test 같은 분포
 - More general formulation <br>
 
-|  a | General speech recognition  |  Rear view mirror speech data | a |
-| ---
+|| General speech recognition  |  Rear view mirror speech data ||
+|------
 | Human level | "Human level" 4% | 6% | ↑↓ Avoiable bias |
 | Error on example trained on | "Traing Eror" 7% | 6% | ↑↓ Variance |
-| Error on example not trained on|  "Traing-dev error" 10% |  "Dev/Test error" 6% |   |
-|  a | ↔ data mismatch | a | a |
+| Error on example not trained on| "Traing-dev error" 10% |  "Dev/Test error" 6% ||
+|| ↔ data mismatch |||
