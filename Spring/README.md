@@ -120,6 +120,103 @@ public ModelAndView memModify(Member member){ // 데이터 타입 : ModelAndView
 }
 ```
 
+### 20. 세션, 쿠키
+→ 클라이언트와 서버의 연결을 유지하는 방법
+#### 20-1 세션(Session)과 쿠키(Cookie)
+- Connectionless Protocol <br>
+: 웹서비스는 HTTP 프로토콜을 기반으로 하는데, HTTP 프로토콜은 클라이언트와 서버의 관계를 <b>유지하지 않는</b> 특징이 있다. <br>
+클라이언트 → 1. 요청(Request) : 서버 연결 → 서버 <br>
+서버 → 2. 응답(Response) : 서버 연결 해제 → 클라이언트 <br>
+- 서버의 부하를 줄일 수 있는 장점은 있나, 클라이언트트의 요청 시마다 서버와 매번 새로운 연결이 생성되기 때문에 일반적인 로그인 상태 유지, 장바구니 등의 기능을 구현하기 어렵다. <br>
+클라이언트 → 1. 로그인 요청 → 서버 <br>
+서버 → 2. 로그인 성공 응답 → 클라이언트 <br>
+클라이언트 → 3. 상품 주문 요청 → 서버 <br>
+서버 → 4. 로그인 유도 페이지 응답 → 클라이언트 <br>
+- 이러한 Connectionless Protocol의 불편함을 해결하기 위해서 세션과 쿠키를 이용한다.
+- 세션과 쿠키는 클라이언트와 서버의 연결 상태를 유지해주는 방법으로, 세션은 <b>서버에서 연결 정보를 관리</b>하는 반면 쿠키는 <b>클라이언트에서 연결 정보를 관리</b>하는데 차이가 있다.
+
+#### 20-2 HttpServletRequest를 이용한 세션 사용
+- 예제 : lec20Pjt001
+클라이언트 → 1-1. 회원가입 요청 → 서버 <br>
+서버 → 1-2. 회원가입 응답 → 클라이언트 <br>
+클라이언트 → 2-1. 로그인 요청 → 서버 <br>
+서버 → 2-2. 로그인 응답 : 세션 생성 → 세션 생성 <br>
+클라이언트 → 3-1. 회원정보 수정 요청 → 서버 <br>
+서버 → 3-2. 회원정보 수정 응답 : 세션 이용 → 세션 생성 <br>
+클라이언트 → 4-1. 회원정보 삭제 요청 → 서버 <br>
+서버 → 3-2. 회원정보 수정 응답 : 세션 이용 → 세션 생성 <br>
+
+- 스프링 MVC에서 HttpServletRequest를 이용해서 세션을 이용하려면 컨트롤러의 메소드에서 파라미터로 HttpServletRequest를 받으면 된다.
+```java
+@RequestMapping(value="/login", method=RequestMethod.POST)
+public String memLogin(Member member, HttpServletRequest request){
+
+	Member mem = service.memberSearch(member);
+
+	HttpSession session = request.getSession(); // 세션을 생성했다, 엄밀히 말하면 세션을 추가했다 라고 한다.
+	session.setAttribute("member", mem);
+
+	return "/member/loginOk";
+}
+```
+
+#### 20-3 HttpSession을 이용한 세션 사용
+- HttpServletRequest와 HttpSession의 차이점은 거의 없으며, 단지 세션객체를 얻는 방법에 차이가 있을 뿐이다. <br>
+HttpServletRequest : 파라미터로 HttpServletRequest를 받은 후 getSession()으로 세션 얻음. <br>
+HttpSession : 파라미터로 HttpSession을 받아 세션 사용. <br>
+```java
+public String memLogin(Member member, HttpServletRequest request){
+	...
+	HttpSession session = request.getSession();
+	session.setAtrribute("member", mem);
+	...
+}
+```
+```java
+public String memLogin(Member member, HttpSession session){
+	...
+	session.setAttribute("member", mem);
+	...
+}
+```
+
+#### 20-4 세션 삭제
+- 세션을 삭제하는 방법은 세션에 저장된 속성이 더 이상 필요 없을 때 이루어지는 과정으로 주로 <b>로그아웃</b> 또는 <b>회원 탈퇴</b> 등에 사용된다. <br>
+```java
+// 로그아웃
+public String memLogout(Member member, HttpServletRequest request){
+
+	HttpSession session = request.getSession();
+	session.invalidate(); // invalidate하면 삭제 된다.
+
+	return "/member/logoutOk";
+}
+```
+```java
+// 회원 삭제 
+public String memRemove(Member member, HttpServletRequest request){
+
+	service.memberRemove(member);
+
+	HttpSession session = request.getSession();
+	session.invalidate(); // invalidate하면 삭제 된다.
+
+	return "/member/removeOk";
+}
+```
+
+#### 20-5 세션 주요 메소드 및 플로어
+
+
+
+
+
+
+#### 20-6 쿠키(Cookie)
+
+ 
+
+
  
 
 --------
