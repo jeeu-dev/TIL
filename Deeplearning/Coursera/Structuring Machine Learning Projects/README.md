@@ -25,6 +25,7 @@ Deep Learning
 - train / training-dev / dev / test로 나눔 
 - train & training-dev는 같은 분포 / dev랑 test 같은 분포
 - More general formulation <br>
+
 |    | General speech recognition  |  Rear view mirror speech data |  |
 | ---
 | Human level | "Human level" 4% | 6% | ↑↓ Avoiable bias |
