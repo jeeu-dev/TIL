@@ -13,11 +13,29 @@ Spring
 `						 → YES - return "member/modifyForm";` <br>
 
 #### 21-2 인터셉터(Interceptor)
+- 리다이렉트를 사용해야 하는 경우가 많은 경우 HandlerInterceptor를 이용할 수 있다.
+(1) Request → (2) DispatcherServlet → HandlerInterceptor(인터페이스) → (3) prehandle() → (4) Handler(Controller) → (5) HandlerInterceptor(인터페이스) <br>
+→ (6) postHandle() → (7) view → HandlerInterceptor (9) afterCompletion()<br>
+→ Response <br>
 
+### 22. Database
+#### 22-1 오라클 다운로드
+- [oracle](https://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html)
 
+#### 22-2 오라클 설치
+- 압축풀고 setup.exe - Install Wizard
 
+#### 22-3 계정 생성
+- cmd → 접속 : sqlplus → user-name : system / password : oracle <br>
+`SQL> create user username identified by password;`
+→ username과 password 설정
+- 권한주기 <br>
+`SQL> grant connect, resource to username;` : connect 권한과 resource 권한을 준다. 
+- 계정삭제 <br>
+`SQL> drop user username cascade;`
 
-
+#### 22-4 SQL developer
+- SQL Developer 설치 → 사이트에서 압축만 해제하면 됨 / jdk 위치 설정해준다. <br>
 
 --------
 > 2019-01-30
