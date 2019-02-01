@@ -6,7 +6,11 @@ Spring
 > 2019-02-01
 ### 21. 리다이렉트, 인터셉트
 #### 21-1 리다이렉트(Redirect)
-
+- 지금의 페이지에서 특정 페이지로 전환하는 기능
+회원정보 수정요청 → 회원인증? → NO - 메인 페이지로 유도 <br>
+							→ YES - 회원정보 수정페이지로 유도 <br>
+`modifyForm() → 회원인증? → NO - return "redirect:/";` <br>
+`						 → YES - return "member/modifyForm";` <br>
 
 #### 21-2 인터셉터(Interceptor)
 
