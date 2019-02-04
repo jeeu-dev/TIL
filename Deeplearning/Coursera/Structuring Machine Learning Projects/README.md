@@ -14,6 +14,15 @@ Deep Learning
 
 > Multi-task learning
 - Transfer learning에서는 순차적(A 업무 다음에 B업무 학습)으로 학습시켰다면 여기서는 동시에 시작한다. <br>
+- When multi-task learning makes sense?
+- Traing on a set of tasks that could benefit from having shared lower-level features. <br>
+- Usually : Amount of data you have for each task is quite similar. <br>
+- Can train a big enough neural network to do well on all the tasks.
+- 멀티 태스크 러닝은 1개의 신경망이 여러 업무를 처리 할 수 있도록 해준다. 이러한 특성은 따로 업무를 진행하는 것보다 더 좋은 성능을 가질 수 있도록 해준다. / Transfer learning이 multi-task learning보다 더 자주 쓰인다. 
+
+> end-to-end deep learning
+>> what is end-to-end deep learning?
+- 
 
 
 
