@@ -3,6 +3,22 @@ Deep Learning
 
 > 자료 : Coursera [강의](https://www.coursera.org/learn/machine-learning-projects/)<br>
 -------
+> 2019-02-04
+* Structuring Machine Learning Projects <br>
+> Transfer learning
+- When transfer learning makes sense <br>
+- Task A and B have the same input x. <br>
+- You have a lot more data for Task A than Task B. <br>
+- Low level features from A could be helpful for learning B. <br>
+- 요약하자면, transfer은 특정 B라고 하는 업무를 잘하려고 할 때 가장 도움이 된다. 이런 B 업무는 보통 데이터가 많이 없는 경우. 예를 들어 좋은 방사선 판단 시스템을 만들기 위해서 x-ray 이미지를 수집하기는 어렵다(수집 자체가 어렵다). 이런 경우, 관련된 약간은 다른 업무를 찾을 수 있다. 이미지 인식과 같은 분야에서 백만개의 이미지를 가지고 와서 여러 특성들을 배울 수 있을 것이다. 그렇게 배운 이후에, B업무에서 잘하려고 할 수 있을 것이다. 방사선학 업무에서(데이터가 많이 없어도). <br>
+
+> Multi-task learning
+- Transfer learning에서는 순차적(A 업무 다음에 B업무 학습)으로 학습시켰다면 여기서는 동시에 시작한다. <br>
+
+
+
+
+-------
 > 2019-01-29
 * Structuring Machine Learning Projects <br>
 >> Addressing data mismatch
