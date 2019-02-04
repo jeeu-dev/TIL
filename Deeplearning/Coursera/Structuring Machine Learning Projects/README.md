@@ -17,12 +17,23 @@ Deep Learning
 - When multi-task learning makes sense?
 - Traing on a set of tasks that could benefit from having shared lower-level features. <br>
 - Usually : Amount of data you have for each task is quite similar. <br>
-- Can train a big enough neural network to do well on all the tasks.
-- 멀티 태스크 러닝은 1개의 신경망이 여러 업무를 처리 할 수 있도록 해준다. 이러한 특성은 따로 업무를 진행하는 것보다 더 좋은 성능을 가질 수 있도록 해준다. / Transfer learning이 multi-task learning보다 더 자주 쓰인다. 
+- Can train a big enough neural network to do well on all the tasks. <br>
+- 멀티 태스크 러닝은 1개의 신경망이 여러 업무를 처리 할 수 있도록 해준다. 이러한 특성은 따로 업무를 진행하는 것보다 더 좋은 성능을 가질 수 있도록 해준다. / Transfer learning이 multi-task learning보다 더 자주 쓰인다. <br>
 
 > end-to-end deep learning
 >> what is end-to-end deep learning?
-- 
+
+>> Whether to use end-to-end deep learning
+- Pros and cons of end-to-end deep learning <br>
+-- Pros : <br>
+--  Let the data speak <br>
+--  Less hand-designing of components needed <br>
+-- Cons: <br>
+--  May need large amount of data <br>
+--  Excludes potentially usefull hand-designed components <br>
+- Applying end-to-end deep learning <br>
+-- Key question : Do you have sufficient data to learn a function of the complexity needed to map x to y? <br>
+
 
 
 
