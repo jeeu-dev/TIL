@@ -18,7 +18,7 @@ CREATE TABLE member(
 	);
 ```
 ```SQL
-# member 테이블에 테스트 차원에서 'b' 계정을 삽입니다.
+# member 테이블에 테스트 차원에서 'b' 계정을 삽입한다.
 INSERT INTO member(
 	memId, memPw, memMail) values('b','bb','bbb@gmail.com');
 ```
