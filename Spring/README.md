@@ -3,6 +3,46 @@ Spring
 
 > 자료 : 자바 스프링 프레임워크(ver.2018) – 신입 프로그래머를 위한 [강좌](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC_renew/)<br>
 --------
+> 2019-02-07
+### 23. JDBC
+#### 23-1 기본 SQL
+- Oracle SQL Developer 실행 <br>
+- 테이블 생성 및 삭제 <br>
+```SQL
+# member 테이블 생성
+CREATE TABLE member(
+	memId VARCHAR2(10) CONSTRAINT memId_pk PRIMARY KEY,
+	memPw VARCHAR2(10),
+	memMail VARCHAR2(15),
+	memPurcNum NUMBER(3) DEFAULT 0 CONSTRAINT memPurNum_ck CHECK (memPurcNum <3 )
+	);
+```
+```SQL
+# member 테이블에 테스트 차원에서 'b' 계정을 삽입니다.
+INSERT INTO member(
+	memId, memPw, memMail) values('b','bb','bbb@gmail.com');
+```
+```SQL
+# member 테이블에서 'memId'가 'b'인 회원을 삭제한다.
+DELETE FROM member WHERE memId='b';
+```
+```SQL
+# member 테이블의 모든 회원정보를 출력한다.
+SELECT * FROM member;
+```
+```SQL
+# member 테이블을 삭제한다.
+DROP TABLE member;
+```
+
+#### 23-2 JDBC
+- 드라이버 로딩 → DB 연결 → SQL 작성 및 전송 → 자원 해제
+
+
+
+
+
+--------
 > 2019-02-01
 ### 21. 리다이렉트, 인터셉트
 #### 21-1 리다이렉트(Redirect)
