@@ -49,7 +49,7 @@ public class MemberDao implements MemberDao{
 	private String userpw = "tiger";
 
 	private Connection conn = null;
-	private PrepareStatement pstmt = null;
+	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 
 	@Override
@@ -109,6 +109,17 @@ public class MemberService implements IMemberService{
 	}
 }
 ```
+
+### 24. JdbcTemplate
+#### 24-1 JDBC의 단점을 보완한 JdbcTemplate
+- JDBC : 드라이버 로딩 → DB 연결 → <b>SQL 작성 및 전송</b> → 자원해제
+- JdbcTemplate : JdbcTemplate(드라이버 로딩, DB 연결, 자원해제) → <b>SQL 작성 및 전송</b>
+
+#### 24-2 DataSource 클래스
+- 데이터베이스 연결과 관련된 정보를 가지고 있는 DataSource는 스프링 또는 c3p0에 제공하는 클래스를 이용할 수 있다.
+- 스프링 : org.springframework.jdbc.datasource.DriverManagerDataSource
+- c3p0 : com.mchange.v2.c3p0.DriverManagerDataSource
+
 
 
 
