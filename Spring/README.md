@@ -331,6 +331,9 @@ public class MemberDao implements IMemeberDao{
 	});
 ```
 
+- JDBC는 거의 안쓴다고 보면 된다. <br>
+- JdbcTemplate을 씀. 
+
 
 --------
 > 2019-02-01
