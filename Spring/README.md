@@ -38,6 +38,78 @@ DROP TABLE member;
 #### 23-2 JDBC
 - 드라이버 로딩 → DB 연결 → SQL 작성 및 전송 → 자원 해제
 
+```java
+//MemberDao.java
+@Repository
+public class MemberDao implements MemberDao{
+
+	private String driver = "oracle.jdbc.driver.OracleDriver"; // 드라이버 설정 및 로딩
+	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	private String userid = "scott"; //계정이름
+	private String userpw = "tiger";
+
+	private Connection conn = null;
+	private PrepareStatement pstmt = null;
+	private ResultSet rs = null;
+
+	@Override
+	public int memberInsert(Member member){
+
+		int result = 0;
+
+		try{
+			Class.forName(driver); //드라이버 로딩 - 메모리에 로딩
+			conn = DriverManager.getConnection(url, userid, userpw); //드라이버 매니저로부터 연결 객체 가져온다 - 실무에서는 url에 IP 주소
+			String sql = "INSERT INTO member (memId, memPW, memMail) values (?, ?, ?)"; // 쿼리 날리기 휘ㅐ
+			pstmt.setString(1, member.getMemId());
+			pstmt.setString(2, member.getMemPw());
+			pstmt.setString(3, member.getMemMail()); 
+			result = pstmt.executeUpdate(); // 쿼리 주입 result : 성공 횟수
+
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(pstmt !=null) pstmt.close();
+				if(conn !=null) conn.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+}
+```
+```java
+//IMemberDao.java
+public interface IMemberDao{
+	int memberInsert(Member member);
+}
+
+
+```
+```java
+//MemberService.java
+@Service
+public class MemberService implements IMemberService{
+	...
+	@Override
+	public void memberRegister(Member member){
+
+		int result = dao.memberInsert(member);
+
+		if(result == 0){
+			System.out.println("Join Fail!");
+		}else{
+			System.out.println("Join Success!");
+		}
+	}
+}
+```
+
 
 
 
