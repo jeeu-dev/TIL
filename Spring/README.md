@@ -36,7 +36,7 @@ DROP TABLE member;
 ```
 
 #### 23-2 JDBC
-- 드라이버 로딩 → DB 연결 → SQL 작성 및 전송 → 자원 해제
+- 드라이버 로딩 → DB 연결 → SQL 작성 및 전송 → 자원 해제 <br>
 
 ```java
 //MemberDao.java
@@ -60,7 +60,7 @@ public class MemberDao implements MemberDao{
 		try{
 			Class.forName(driver); //드라이버 로딩 - 메모리에 로딩
 			conn = DriverManager.getConnection(url, userid, userpw); //드라이버 매니저로부터 연결 객체 가져온다 - 실무에서는 url에 IP 주소
-			String sql = "INSERT INTO member (memId, memPW, memMail) values (?, ?, ?)"; // 쿼리 날리기 휘ㅐ
+			String sql = "INSERT INTO member (memId, memPW, memMail) values (?, ?, ?)"; // 쿼리 날리기
 			pstmt.setString(1, member.getMemId());
 			pstmt.setString(2, member.getMemPw());
 			pstmt.setString(3, member.getMemMail()); 
@@ -112,16 +112,120 @@ public class MemberService implements IMemberService{
 
 ### 24. JdbcTemplate
 #### 24-1 JDBC의 단점을 보완한 JdbcTemplate
-- JDBC : 드라이버 로딩 → DB 연결 → <b>SQL 작성 및 전송</b> → 자원해제
-- JdbcTemplate : JdbcTemplate(드라이버 로딩, DB 연결, 자원해제) → <b>SQL 작성 및 전송</b>
+- JDBC : 드라이버 로딩 → DB 연결 → <b>SQL 작성 및 전송</b> → 자원해제 <br>
+- JdbcTemplate : JdbcTemplate(드라이버 로딩, DB 연결, 자원해제) → <b>SQL 작성 및 전송</b> <br>
 
 #### 24-2 DataSource 클래스
-- 데이터베이스 연결과 관련된 정보를 가지고 있는 DataSource는 스프링 또는 c3p0에 제공하는 클래스를 이용할 수 있다.
-- 스프링 : org.springframework.jdbc.datasource.DriverManagerDataSource
-- c3p0 : com.mchange.v2.c3p0.DriverManagerDataSource
+- 데이터베이스 연결과 관련된 정보를 가지고 있는 DataSource는 스프링 또는 c3p0에 제공하는 클래스를 이용할 수 있다. <br>
+- 스프링 : org.springframework.jdbc.datasource.DriverManagerDataSource <br>
+- c3p0 : com.mchange.v2.c3p0.DriverManagerDataSource <br>
 
+- repository 설정
+```xml
+<!-- pom.xml -->
+	...
+<!-- DB -->
+	<dependency>
+		<groupId>prg.sprintframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>4.1.6.RELEASE</version>
+	</dependency>
+	<dependency>
+		<groupId>com.mchange</groupId>
+		<artifactId>c3p0</artifactId>
+		<version>0.9.5</version>
+	</dependency>
+	...
+	<!-- 이렇게 쓰려면 먼저 (oracle)repositories를 추가 해야한다. -->
+```
+```java
+//MemberDao.java
 
+public class MemberDao implements IMemeberDao{
+	...
+	private DriverManagerDataSource dataSource; //c3p0 import
 
+	private JdbcTemplate template;
+
+	public MemberDao(){
+		dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClass(driver); // 어떤 API를 쓰느냐에 따라 조금씩 다름. oracle의 dataSource를 쓰는면우 setDriverClassName이라고 선언해줘야함.
+		dataSource.setJdbcUrl(url); //그러나 대동소이하다. 비슷하다.
+		dataSource.setUser(userid);
+		dataSource.setPassword(userpw);  //기존에는 모든 method에 설정해줬는데 dataSource에 설정해줌으로써 매번 설정안해줘도 된다.
+
+		template = new JdbcTemplate();
+		template.setDataSource(dataSource);
+	}
+
+	@Override
+	public int memberInsert(Member member){
+
+		int result = 0;
+
+		String sql = "INSERT INTO member (memId, memPW, memMail) values (?, ?, ?)";
+		result = template.update(sql,member.getMemId(), member.getMemPw(), member.getMemMail());
+
+		//JdbcTemplate 덕분에 아래의 코드가 다 필요없어짐
+		/* 
+		try{
+			Class.forName(driver); //드라이버 로딩 - 메모리에 로딩
+			conn = DriverManager.getConnection(url, userid, userpw); //드라이버 매니저로부터 연결 객체 가져온다 - 실무에서는 url에 IP 주소
+			String sql = "INSERT INTO member (memId, memPW, memMail) values (?, ?, ?)"; // 쿼리 날리기
+			pstmt.setString(1, member.getMemId());
+			pstmt.setString(2, member.getMemPw());
+			pstmt.setString(3, member.getMemMail()); 
+			result = pstmt.executeUpdate(); // 쿼리 주입 result : 성공 횟수
+
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if(pstmt !=null) pstmt.close();
+				if(conn !=null) conn.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		*/
+		return result;
+	}
+
+	@Override
+	public Member memberSelect(Member member){
+
+		List<Member> members = null;
+
+		final String sql = "SELECT * FROM member WHERE memId = ? AND memPw =?"; //다른 곳에서 사용될 수 있기 때문에 final을 선언해준다.
+
+		members = template.query(sql, new PreparedStatementSetter(){
+
+			@Override
+			public void setValues(PreparedStatement pstmt) throws SQLException{
+				pstmt.setString(1, member.getMemId());
+				pstmt.setString(2, member.getMemPw());
+			}
+		}, new RowMapper<Member>(){
+
+			@Override
+			public Member mapRow(ResultSet rs, int rowNum) throws SQLException{
+				Member mem = new Member();
+				mem.setMemId(rs.getString("memId"));
+				mem.setMemPw(rs.getString("memPw"));
+				mem.setMemMail(rs.getString("memMail"));
+				mem.setMemPurcNum(rs.getInt("memPurcNum"));
+				return mem;
+			}
+		});
+
+		if(members.isEmpty()) return null;
+
+		return members.get(0);
+	}
+}
+```
 
 
 
