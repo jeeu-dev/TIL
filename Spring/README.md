@@ -227,6 +227,109 @@ public class MemberDao implements IMemeberDao{
 }
 ```
 
+- update 할 때는 아래와 같은 세가지 방법이 있고,
+```java
+// 1st
+	result = template.update(sql, member.getMemId(), member.getMemPw(), member.getMemMail());
+
+// 2nd - PreparedStatementCreator() 사용
+	result = template.update(new PreparedStatementCreator(){
+
+		@Override
+		public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{
+			PreparedStatement pstmt = conn.PreparedStatement(sql);
+			pstmt.setString(1, member.getMemId());
+			pstmt.setString(2, member.getMemPw());
+			pstmt.setString(3, member.getMemMail());
+
+			return pstmt;
+		}
+	});
+
+//	3rd - PreparedStatementSetter() 사용
+	result = template.update(sql, new PreparedStatementSetter(){
+
+		@Override
+		public void setValues(PreparedStatement pstmt) throws SQLException{
+			pstmt.setString(1, member.getMemId());
+			pstmt.setString(2, member.getMemPw());
+			pstmt.setString(3, member.getMemMail());
+		}
+	});
+```
+- query를 날릴 때는 아래의 네가지 방법이 있다.
+```java
+// 1st - PreparedStatementSetter() 사용
+	members = template.query(sql, new PreparedStatementSetter(){
+
+			@Override
+			public void setValues(PreparedStatement pstmt) throws SQLException{
+				pstmt.setString(1, member.getMemId());
+				pstmt.setString(2, member.getMemPw());
+			}
+		}, new RowMapper<Member>(){
+
+			@Override
+			public Member mapRow(ResultSet rs, int rowNum) throws SQLException{
+				Member mem = new Member();
+				mem.setMemId(rs.getString("memId"));
+				mem.setMemPw(rs.getString("memPw"));
+				mem.setMemMail(rs.getString("memMail"));
+				mem.setMemPurcNum(rs.getInt("memPurcNum"));
+				return mem;
+			}
+		});
+
+// 2nd - PreparedStatementCreator 사용
+	members = template.query(new PreparedStatementCreator(){
+
+		@Override
+		public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{
+			PreparedStatement pstmt = conn.PreparedStatement(sql);
+			pstmt.setString(1, member.getMemId());
+			pstmt.setString(2, member.getMemPw());
+			return pstmt;
+		}
+	}, new RowMapper<Member>(){
+
+		@Override
+		public Member mapRow(ResultSet rs, int rowNum) throws SQLException{
+			Member mem = new Member();
+			mem.setMemId(rs.getString("memId"));
+			mem.setMemPw(rs.getString("memPw"));
+			mem.setMemMail(rs.getString("memMail"));
+			mem.setMemPurcNum(rs.getInt("memPurcNum"));
+			return mem;
+		}
+	});
+
+// 3rd - RowMapper 사용
+	members = template.query(sql, new RowMapper<Member>(){
+
+		@Override
+		public Member mapRow(ResultSet rs, int rowNum) throws SQLException{
+			Member mem = new Member();
+			mem.setMemId(rs.getString("memId"));
+			mem.setMemPw(rs.getString("memPw"));
+			mem.setMemMail(rs.getString("memMail"));
+			mem.setMemPurcNum(rs.getInt("memPurcNum"));
+			return mem;
+		}
+	}, member.getMemId(), member.getMemPw());
+
+// 4th - Object 사용
+	members = template.query(sql, new Object[]{member.getMemId(), member.getMemPw()}, new RowMapper<Member>(){
+		@Override
+		public Member mapRow(ResultSet rs, int rowNum) throws SQLException{
+			Member mem = new Member();
+			mem.setMemId(rs.getString("memId"));
+			mem.setMemPw(rs.getString("memPw"));
+			mem.setMemMail(rs.getString("memMail"));
+			mem.setMemPurcNum(rs.getInt("memPurcNum"));
+			return mem;
+		}
+	});
+```
 
 
 --------
