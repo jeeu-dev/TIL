@@ -3,13 +3,25 @@ Deep Learning
 
 > 자료 : Coursera [강의](https://www.coursera.org/learn/machine-learning-projects/)<br>
 -------
+> 2019-02-12
+- Edge Detection Example <br>
+→ 별표는 곱하기가 아니라 컨볼루션이다. <br>
+→ Vertical edge detection <br>
+→ 커널을 통해 컨볼루션을 해준 결과 가운데 영역을 detection 할 수 있다. <br>
+
+- More Edge Detection <br>
+→ Vertical edge detection examples <br>
+→ Vertical and Horizontal edge Detection <br>
+→ Learning to detect edges (sober filter, schorr filteer) <br>
+→ filter를 배울 필요없다 → backprop이 어차피 학습해준다. <br>
+
+
+
+-------
 > 2019-02-11
 > Convolutional Neural Networks
-- Computer Vision
-→ 이미지가 크면 w가 너무 많고 무거워진다.
-
-- Edge Detection Example
-→ 별표는 곱하기가 아니라 컨볼루션이다. 
+- Computer Vision <br>
+→ 이미지가 크면 w가 너무 많고 무거워진다. <br>
 
 
 -------
