@@ -3,12 +3,18 @@ Deep Learning
 
 > 자료 : Coursera [강의](https://www.coursera.org/learn/machine-learning-projects/)<br>
 -------
-> 2019-02-10
+> 2019-02-11
+> Convolutional Neural Networks
+- Computer Vision
+→ 이미지가 크면 w가 너무 많고 무거워진다.
+
+- Edge Detection Example
+→ 별표는 곱하기가 아니라 컨볼루션이다. 
 
 
 -------
 > 2019-02-04
-* Structuring Machine Learning Projects <br>
+> Structuring Machine Learning Projects <br>
 > Transfer learning
 - When transfer learning makes sense <br>
 - Task A and B have the same input x. <br>
@@ -44,7 +50,7 @@ Deep Learning
 
 -------
 > 2019-01-29
-* Structuring Machine Learning Projects <br>
+> Structuring Machine Learning Projects <br>
 >> Addressing data mismatch
 - Carry out manual error analysis to try to understand difference between training and dev/test sets
 - Make training data more similar; or collect more data similar to dev/test sets
@@ -59,7 +65,7 @@ Deep Learning
 
 -------
 > 2019-01-28
-* Structuring Machine Learning Projects <br>
+> Structuring Machine Learning Projects <br>
 >> Training and testing on different distributions
 >> Bias and Variance with mismatched data distributions
 - train / training-dev / dev / test로 나눔 
