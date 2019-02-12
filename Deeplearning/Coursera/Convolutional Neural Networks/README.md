@@ -1,7 +1,7 @@
 Deep Learning 
 ====================
 
-> 자료 : Coursera [강의](https://www.coursera.org/learn/machine-learning-projects/)<br>
+> 자료 : Coursera [강의](https://www.coursera.org/learn/convolutional-neural-networks/)<br>
 -------
 > 2019-02-11
 > Convolutional Neural Networks
