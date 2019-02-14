@@ -36,6 +36,75 @@ xxx.jsp → (Request) → 웹 컨테이너(tomcat) [xxx.java → xxx_java.class 
 -------
 > 2019-02-14
 ### 5. Servlet 맵핑
+#### 5-1 Servlet 맴핑이란?
+- Servlet 이름이 긴 것을 간결하고 보안에 취약하지도 않은 이름으로 바꾸는 것. <br>
+
+#### 5-2 web.xml 파일을 이용한 맵핑
+```xml
+<servlet>
+	<servlet-name>servletEx</servlet-name> <!-- 일종의 닉네임 -->
+	<servlet-class>com.servlet.ServletEx</servlet-class> <!-- 실제 servlet -->
+</servlet>
+<servlet-mapping>
+	<servlet-name>servletEx</servlet-name> 
+	<url-pattern>/SE</url-pattern> <!-- mapping할 이름 -->
+</servlet-mapping>
+
+```
+
+#### 5-3 java Annotation을 이용한 맵핑
+```java
+@webServlet("/Hello")
+public class ServletEx extends HttpServlet{
+	...
+}
+```
+
+### 6. Servelt request, response
+#### 6-1 HttpServlet
+- 추상클래스라고 함(abstract class) <br>
+- ServletEx(class) → HttpServlet(abstract class) → GenericServlet(abstract class) → Servlet(interface) <br>
+																				  → ServletConfig(interface) <br>
+																				  → Serializable(interface) <br>
+
+```java
+package com.servlet;
+
+@webServlet("/SE")
+public class ServletEx extends HttpServlet{
+
+	protected void doGet(HttpservletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+	}
+
+	protected void doPost(HttpservletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		doGet(request, response);
+	}
+}
+
+```
+#### 6-2 HttpServletRequest
+- 요청에 대한 정보를 가지고 있는 객체 <br>
+request.getCookies(); <br>
+request.getSession(); <br>
+request.getAttribute(null); <br>
+request.getParameter(null); <br>
+request.getParameterNames(); <br>
+request.getParameterValues(null); <br>
+request.setAttribute(null, null); <br>
+: 직관적으로 다 알 수 있을듯
+
+
+#### 6-3 HttpServletResponse
+- 응답에 대한 정보를 가지고 있는 객체 <br>
+request.addCookie(null); <br>
+request.getWriter(); <br>
+request.getStatus(); <br>
+request.getOutputStream(); <br>
+request.sendRedirect(null); <br>
+
+
+
 
 
 
