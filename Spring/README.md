@@ -31,6 +31,12 @@ xxx.jsp → (Request) → 웹 컨테이너(tomcat) [xxx.java → xxx_java.class 
 
 #### 4-2 Servlet 파일 작성
 
-
 #### 4-3 .class 파일 확인
+
+-------
+> 2019-02-14
+### 5. Servlet 맵핑
+
+
+
 
