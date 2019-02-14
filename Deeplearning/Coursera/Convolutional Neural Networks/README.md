@@ -29,3 +29,20 @@ Deep Learning
 → 관행적으로 홀수(컴퓨터 비전 관행)를 사용한다. 홀수 사용을 추천.
 
 
+-------
+> 2019-02-14
+
+- Strided Convolutions <br>
+→ ((n+2p-f)/s + 1) x ((n+2p-f)/s + 1) <br>
+→ Summary of convolutions <br>
+→ : nxn image, fxf filter, padding p, stride s → [(n+2p-f)/s + 1] x [(n+2p-f)/s + 1] <br>
+→ 정수가 되게 하는 것도 좋지만 내림해도 된다.
+
+- Convolutions Over Volume <br>
+→ 부피 있는 것 즉, 6x6x3과 같은 3D이미지(RGB)도 3D filter로 결과값을 낼 수 있다. <br>
+→ 수직 필터, 수평 필터로 각각 특징을 검출할 수도 있다. (전에 했던 얘기) <br>
+→ 서로 다른 필터를 쓰게 되면 결과값 또한 3D 결과값을 가질 수 있다. <br>
+→ Multiple filters - Summary : n x n x n_c * f x f x n_c → (n-f+1)/4 x (n-f+1)/4 x n'c <br>
+→ n은 이미지의 크기, n_c는 channles(혹은 depth라고도 한다), f는 필터의 크기, n'c는 filter의 갯수 <br>
+
+
