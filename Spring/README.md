@@ -103,9 +103,35 @@ request.getStatus(); <br>
 request.getOutputStream(); <br>
 request.sendRedirect(null); <br>
 
+-------
+> 2019-02-15
 
+### 7. Servlet Life-Cycle
+#### 7-1 Servlet 생명주기
+- @PostConstruct → init() → service → destroy() → @PreDestroy (init ~ destroy : Servlet 생성 및 종료) <br>
 
+#### 7-2 생명주기 관련 메서드
+```java
+@PostConstruct
+public void funPc(){
+	...
+}
 
+@Override
+public void init() throws ServletExceoption{
+	...
+}
+
+@Override
+public void destroy(){
+	...
+}
+
+@PreDestroy
+public void funPd(){
+	...
+}
+```
 
 
 
