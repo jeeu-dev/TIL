@@ -254,14 +254,33 @@ SQL 2008 <br>
 
 ### MS SQL 3일차 
 
-한 라인데 대한 주석은 -- <br>
+한 라인에 대한 주석은 -- <br>
 여러 라인에 대한 주석은 / * * / <br>
 
 포린키 컬럼은 NULL값을 허용하는가? <br>
 : 포린키 컬럼은 기본적으로 NULL값을 허용한다. <br>
 만일 NULL값을 허용하지 않고자 한다면 제약조건 적용할 때 NOT NULL 옵션을 써주어야 한다. <br>
 
+연산자 우선순위 : NOT, AND, OR <br>
 
+#### SELECT 문장 기본
+- SELECT / FROM / WHERE <br>
+- 연산자 <br>
+산술 연산자 <br>
+논리 연산자 <br>
+비교 연산자 <br>
+기타 연산자 <br>
+- 데이터 정렬 <br>
+- 중복된 행 제거 <br>
+- NULL 값 조회 <br>
+- 출력 레코드 제한(TOP) <br>
+- UNION과 UNION ALL 연산자 <br>
+- EXCEPT, INTERSECT 연산자 <br>
+- 범위조회(BETWEEN A AND B) <br>
+- 목록 조회(IN) <br>
+- 유사문자 조회(LIKE) <br>
+- 존재 확인(EXISTS) <br>
+- CASE 문(단순 CASE문, 검색된 CASE문) <br>
 
 
 
