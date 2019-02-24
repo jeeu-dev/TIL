@@ -5,23 +5,23 @@ Deep Learning
 -------
 > 2019-02-11
 > Convolutional Neural Networks
-- Computer Vision <br>
+#### Computer Vision
 → 이미지가 크면 w가 너무 많고 무거워진다. <br>
 
 -------
 > 2019-02-12
-- Edge Detection Example <br>
+#### Edge Detection Example
 → 별표는 곱하기가 아니라 컨볼루션이다. <br>
 → Vertical edge detection <br>
 → 커널을 통해 컨볼루션을 해준 결과 가운데 영역을 detection 할 수 있다. <br>
 
-- More Edge Detection <br>
+#### More Edge Detection
 → Vertical edge detection examples <br>
 → Vertical and Horizontal edge Detection <br>
 → Learning to detect edges (sober filter, schorr filteer) <br>
 → filter를 배울 필요없다 → backprop이 어차피 학습해준다. <br>
 
-- Padding
+#### Padding
 → Valid and Same convolutions <br>
 : "Valid" - no padding → nxn fxf = (n-f+1) x (n-f+1) <br>
 : "Same" - Pad so that output size is the same as the input size. <br> 
@@ -32,17 +32,72 @@ Deep Learning
 -------
 > 2019-02-14
 
-- Strided Convolutions <br>
+#### Strided Convolutions
 → ((n+2p-f)/s + 1) x ((n+2p-f)/s + 1) <br>
 → Summary of convolutions <br>
 → : nxn image, fxf filter, padding p, stride s → [(n+2p-f)/s + 1] x [(n+2p-f)/s + 1] <br>
 → 정수가 되게 하는 것도 좋지만 내림해도 된다.
 
-- Convolutions Over Volume <br>
+#### Convolutions Over Volume
 → 부피 있는 것 즉, 6x6x3과 같은 3D이미지(RGB)도 3D filter로 결과값을 낼 수 있다. <br>
 → 수직 필터, 수평 필터로 각각 특징을 검출할 수도 있다. (전에 했던 얘기) <br>
 → 서로 다른 필터를 쓰게 되면 결과값 또한 3D 결과값을 가질 수 있다. <br>
 → Multiple filters - Summary : n x n x n_c * f x f x n_c → (n-f+1)/4 x (n-f+1)/4 x n'c <br>
 → n은 이미지의 크기, n_c는 channles(혹은 depth라고도 한다), f는 필터의 크기, n'c는 filter의 갯수 <br>
+
+-------
+> 2019-02-24
+
+#### One Layer of a Convolutional Network
+- 컨볼루션 연산에서는 필터가 w와 같은 역할을 하게 된다. <br>
+- Number of parameters in one layer <br>
+: If you have 10 filters that are 3x3x3 in one layer of a neural network, how many parameters does that layer have? <br>
+→ 각각의 필터가 3x3x3의 볼륨이므로 27개의 파라미터로 채워질 것이다. 거기에 바이어스가 있으므로 28개. 필터가 10개 이므로 28 x 10 이므로 280개. <br>
+- Summary of notation <br>
+: If layer l is a convolution layer <br>
+f^[l] = fiilter size <br>
+p^[l] = padding <br>
+s^[l] = stride <br>
+Input : n x n x n_c(number of channel : c)<br>
+→ n_H^[l-1] x n_W^[l-1] x n_c^[l-1] <br>
+Output : n_H^[l] x n_W^[l] x n_c^[l]  <br>
+n_H^[l] = [(n_H^[l-1]+2p^[l]-f^[l]/s^[l]) + 1] <br>
+n_c^[l] = number of filters <br>
+Each filter is : f^[l] x f^[l] x n_c^[l-1]<br>
+Activations : a^[l] → n_H^[l] x n_w^[l] x n_c^[l] <br>
+Weights : f^[l] x f^[l] x n_c^[l-1] x n_c^[l] <br>
+bias : n_c^[l] <br>
+
+#### Simple Convolutional Network Example
+- Types of layer in a convolutional network <br>
+→ Convolution (CONV) <br>
+→ Pooling (POOL) <br>
+→ Fully connected (FC) <br>
+
+#### Pooling Layers
+- Pooling layer : Max Pooling <br>
+: 이게 왜 잘 작동하는지 정확히 아는 사람은 없다. <br>
+- Pooling layer : Average Pooling <br>
+- 풀링할 때 패딩은 쓰지 않는다. <br>
+
+#### CNN Example
+- Neural network example : LeNet-5 <br>
+
+#### Why convolutions
+- Parameter sharing : A feature detector(such as a vertical edge detector) that's useful in one part of the image is probably useful in another part of the image. <br>
+: 수직 엣지 감지기 같은 feature 감지기가 이미지의 한 부분에서 유용하다면 이미지의 다른 부분에서도 유용할 것이라는 견해에 따라 사용된다. 즉, 수직 모서리를 감지하기 위해 3x3 필터를 사용했다면, 다른 곳에도 이 필터를 계속해서 사용해나간다는걸 말한다. 말그대로 한 필터를 다른 곳에도 지속적으로 적용해나가며 학습해나간다는 것.<br>
+
+- Sparsity of connections : In each layer, each output value depends only on a small number of inputs. <br>
+: 한 부분의 아웃풋의 결과가 입력값의 일정 부분에만 영향을 받는다. (당연한 말..)<br>
+
+#### Quiz - The basics of ConvNets
+
+
+
+
+
+
+
+
 
 
