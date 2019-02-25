@@ -206,7 +206,13 @@ Windows → Preference → Web → JSP Files → Editor → Templates → new �
 3) taglib : 외부라이브러리 태그 설정 → <% taglib uri="uri" prefix="네임스페이스명">
 ```
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 ```
+
+### 10. JSP request, response
+
+#### 10-1 request 객체
+
+
+#### 10-2 response 객체
 
 
