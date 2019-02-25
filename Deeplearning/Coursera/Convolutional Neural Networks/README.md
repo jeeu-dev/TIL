@@ -4,7 +4,10 @@ Deep Learning
 > 자료 : Coursera [강의](https://www.coursera.org/learn/convolutional-neural-networks/)<br>
 -------
 > 2019-02-11
-> Convolutional Neural Networks
+## Convolutional Neural Networks
+
+### 1 Week
+
 #### Computer Vision
 → 이미지가 크면 w가 너무 많고 무거워진다. <br>
 
@@ -92,10 +95,57 @@ bias : n_c^[l] <br>
 
 #### Quiz - The basics of ConvNets
 
+-------
+> 2019-02-25
 
+### 2 Week
 
+#### Why look at case studies?
+- Outline - Classic network: <br>
+-- LeNet-5 <br>
+-- AlexNet <br>
+-- VGG <br>
+-- ResNet(Conv Residual Network) <br>
+-- Inception <br>
 
+#### Classic Networks
+- LeNet-5 <br>
+32x32x1 → 28x28x6 → 14x14x6 → 10x10x16 → 5x5x16 → 120 → 84 → y^ softmax 10 <br>
+[LeCun et al., 1998. Gradient-based learning applied to document recognition] <br>
+- AlexNet <br>
+227x227x3 → 55x55x96 → 27x27x96 → 27x27x256 → 13x13x256 → 13x13x384 → 13x13x256 → 6x6x256 → 9216 → 4096 → Softmax 1000 <br>
+[Krizhevsky et al., 2012. ImageNet classification with deep convolutional neural networks] <br>
+- VGG-16
+224x224x3 → 224x224x64 → 112x112x64 → 112x112x128 → 56x56x128 → 56x56x256 → 28x28x256 → 28x28x512 → 14x14x512 → 14x14x512 → 7x7x512 → 4096 → 4096 → Softmax 1000 <br> 
+[Simonyan & Zisserman 2015. Very deep convolutional networks for large-scale image recognition] <br>
 
+#### ResNets
+- Residual block <br>
+: 중간 과정을 skip하고(short cut/skip connection) 활성화 함수를 통해 계산할 때 더해준다. <br>
+→ 잔류 블록 → 신경망에 더 깊이 들어갈 수 있게 해주고, 사라지거나 폭발적으로 증가하는 gradient 문제들을 처리하도록 도와주며, 눈에 띄는 손실 없이 신경망을 훨씬 깊게 훈련하도록 도와준다. <br> 
+[He et al., 2015. Deep residual networks for image recognition] <br>
+
+#### Why ResNets Work
+
+#### Networks in Networks and 1x1 Convolutions
+- Why does a 1x1 convolution do? <br>
+: Network in Network <br>
+
+#### Inception Network Motivation
+
+#### Inception Network
+- Inception module <br>
+
+#### Using Open-Source Implementation
+
+#### Transfer Learning
+- 이미 훈련된 네트워크가 많다. 다운받으면 됨. <br>
+
+#### Data Augmentation
+- Mirroring <br>
+- Random Croppping <br>
+- Color shifting <br>
+- Implementing distortions during training <br>
 
 
 
