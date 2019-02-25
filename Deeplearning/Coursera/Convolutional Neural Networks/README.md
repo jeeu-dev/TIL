@@ -147,6 +147,16 @@ bias : n_c^[l] <br>
 - Color shifting <br>
 - Implementing distortions during training <br>
 
+#### State of Computer Vision
+Tips for doing well on benchmarks/winning competitions <br>
+- Ensembling <br>
+: Train several networks independently and average their outputs <br>
+- Multi-crop at test time <br>
+: Run classifier on multiple versions of test images and average results <br>
+Use open source code
+- Use architectures of networks published in the literature <br>
+- Use open source implementations if possible <br>
+- Use pretrained models and fine-tune on your dataset <br>
 
 
 
