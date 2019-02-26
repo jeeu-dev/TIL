@@ -208,11 +208,189 @@ Windows → Preference → Web → JSP Files → Editor → Templates → new �
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 ```
 
+-------
+> 2019-02-26
+
 ### 10. JSP request, response
 
 #### 10-1 request 객체
+```
+<%
+ m_name = request.getParameter("m_name");
+ m_pass = request.getParameter("m_pass");
+ m_gender = request.getParameter("m_gender");
+%>
+```
+
+#### - 실습
+```html
+<form action="mSignUp.jsp" method="get">
+	name : <input type="text" name="m_name"><br>
+	password : <input type="password" name="m_pass"><br>
+	<input type="submit" value="sign up">
+</form>
+```
+
+```html
+<body>
+	<%!
+	String m_name;
+	String m_pass;
+	String[] m_hobby;
+http://54.180.80.36/2019/02/26/weekly-plm-tech-6-2%ec%9b%94-4%ec%a3%bc%ec%b0%a8-%ec%86%8c%ec%8b%9d-%ec%a0%95%eb%a6%ac/	%>
+http://54.180.80.36/2019/02/26/weekly-plm-tech-6-2%ec%9b%94-4%ec%a3%bc%ec%b0%a8-%ec%86%8c%ec%8b%9d-%ec%a0%95%eb%a6%ac/
+	<%
+	m_name = request.getParameter("m_name");
+	m_pass = request.getParameter("m_pass");
+	%>
+
+	m_name : <%=m_name%> <br>
+	m_pass : <%=m_name%> <br>
+</body>
+```
 
 
 #### 10-2 response 객체
+```
+<%
+  response.sendRedirect("secondPage.jsp");
+%>
+```
+#### - 실습
 
+```html
+<body>
+
+	<p>First Page</p>
+	
+	<%
+	  response.sendRedirect("secondPage.jsp");
+	%>
+
+</body>
+```
+
+#### 11. JSP 내장 객체
+
+#### 11-1 Config 객체
+Web.xml(init param) →(getInitParameter)→ JSP(init param) <br>
+
+```
+<init-param>
+  <param-name>adminId</param-name>
+  <param-value>admin</param-value>
+</init-param>
+<init-param>
+  <param-name>adminPw</param-name>
+  <param-value>1234</param-value>
+</init-param>
+```
+```
+String adminId = getServletConfig().getInitParameter("adminId");
+String adminPw = getServletConfig().getInitParameter("adminPw");
+```
+
+#### 11-2 Application 객체
+Web.xml(context param) →(getInitParameter)→ JSP(context param), JSP(context param), JSP(context param) <br>
+```
+<context-param>
+ <param-name>imgDir</param-name>
+ <param-value>/upload/img</param-value>
+</context-param>
+
+<context-param>
+ <param-name>testServerIP</param-name>
+ <param-value>127.0.0.1</param-value>
+</context-param>
+```
+```
+String imgDir = getServletContext().getInitParameter("imgDir");
+String testServerIP = getServletContext().getInitParameter("testServerIP");
+```
+
+context →setAttribute(), getAttribute() → JSP, JSP, JSP <br>
+```
+getServletContext().setAttribute("connectedIP", "165.62.58.23");
+getServletContext().setAttribute("connectedUser", "hong");
+```
+```
+(String)getServletContext().getAttribute("connectedIP");
+(String)getServletContext().getAttribute("connectedUser");
+```
+
+#### 11-3 Out 객체
+```
+<%
+  out.print("<h1>Hello JSP World!</h1>");
+%>
+```
+#### 11-4 Exception 객체
+```
+<%@ page errorPage="errorPage.jsp"%>
+...
+
+<%
+  out.print(str.toString());
+%>
+```
+
+#### 12. Servlet 데이터 공유
+
+#### 12-1 servlet parameter
+web.xml(init param) → getInitParameter() → servlet(init param) <br>
+
+```
+<init-param>
+  <param-name>adminId</param-name>
+  <param-value>admin</param-value>
+</init-param>
+<init-param>
+  <param-name>adminPw</param-name>
+  <param-value>1234</param-value>
+</init-param>
+```
+↓
+```
+String adminId = getServletConfig().getInitParameter("adminId");
+String adminPw = getServletConfig().getInitParameter("adminPw");
+```
+
+#### 12-2 context parameter
+Web.xml(context param) →(getInitParameter)→ servlet(context param), servlet(context param), servlet(context param) <br>
+```
+<context-param>
+  <param-name>imgDir</param-name>
+  <param-value>/upload</param-value>
+</context-param>
+<context-param>
+  <param-name>testServerIP</param-name>
+  <param-value>127.0.0.1</param-value>
+</context-param>
+```
+↓
+```
+String imgDir = getServletConfig().getInitParameter("imgDir");
+String testServerIP = getServletConfig().getInitParameter("testServerIP");
+```
+
+#### 12-3 context attribute
+
+context →setAttribute(), getAttribute() → servlet, servlet, servlet <br>
+```
+getServletContext().setAttribute("connectedIP", "165.62.58.23");
+getServletContext().setAttribute("connectedUser", "hong");
+```
+↓
+```
+(String)getServletContext().getAttribute("connectedIP");
+(String)getServletContext().getAttribute("connectedUser");
+```
+
+#### 13. Cookie
+
+#### 13-1 Cookie란?
+
+
+
+#### 13-2 
 
