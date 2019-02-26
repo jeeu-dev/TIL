@@ -160,4 +160,23 @@ Use open source code
 
 
 
+### 3 Week
+
+#### Object Localization
+
+#### Landmark Detection
+- 레이블들은 다른 이미지를 통틀어 일관적이어야 한다. <br>
+
+#### Object Detection
+- 스트라이드를 아주 작게 하지 않는 이상 이미지 내에서 객체를 잡는건 불가능하다. - 계산 문제 <br>
+
+#### Convolutional Implementation of Sliding Windows
+
+
+
+
+
+
+
+
 
