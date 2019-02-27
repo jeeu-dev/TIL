@@ -389,8 +389,79 @@ getServletContext().setAttribute("connectedUser", "hong");
 #### 13. Cookie
 
 #### 13-1 Cookie란?
+브라우저 → request → 서버 <br>
+브라우저 ← response ← 서버 <br>
+
+#### 13-2 Cookie 구현
+cookie == null → false → cookie 재활용 → redirect : loginOk.jsp <br>
+               → true → cookie 생성 → redirect : loginOk.jsp <br>
+```
+Cookie[] cookies = request.getCookies();
+Cookie cookie = null;
+
+for(cookie c : cookies){
+
+	System.out.println("c.getName() : " + c.getName() + ", c.getValue() : " + c.getValue());
+
+	if(c.getName().equals("memberId")){
+		fookie = c;
+	}
+}
+
+if(cookie = null){
+	System.out.prinln("cookie is null");
+	cookie = new Cookie("memberId", mId);
+}
+
+response.addCookie(cookie);
+cookie.setMaxAge(60*60);
+
+response.sendRedirect("loginOk.jsp");
+```
+
+- 쿠키는 보안에 취약할 수 있다. <br>
+
+#### 14. Session
+
+#### 14-1 Session이란?
+브라우저 → request → 서버 <br>
+브라우저 ← response ← 서버(기존연결정보 저장) → Session<br>
+
+#### 14-2 Session 구현
+session == null → false → 로그인 정보 출력 <br>
+```
+session = request.getSession();
+out.print("memberId : " + session.getAttribute("memberId"));
+```
+→ redirect : loginOk.jsp → 로그아웃 <br>
+ 
+session == null → true → 로그인 유도 <br>
+```
+HttpSession session = request.getSession();
+session.setAttribute("memberId",mId);
+
+response.sendRedirect("loginOk.jsp");
+```
+→ redirect : loginOk.jsp → 로그아웃 <br>
+
+#### 15. 한글처리 ~ 18. JDBC는 알고 있는 내용이라 건너 뜁니다.
+
+#### 19. DAO와 DTO
+
+#### 19-1 DAO, DTO란?
+브라우저 → request → 웹서버 [Servlet ←→ DAO] → DB <br>
+브라우저 ← response → 웹서버 [Servlet ←→ DAO] ←(DTO)← DB <br>
+
+DAO : Data Access Object <br>
+DTO : Data Transfer Object <br>
+
+#### 19-2 DAO, DTO 구현
+브라우저 ←→ BookServlet ←→ DB <br>
+		       ↓ <br>
+브라우저 ←→ BookServlet ←→ BookDAO ← DTO → DB <br>
 
 
 
-#### 13-2 
+
+
 
