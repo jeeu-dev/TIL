@@ -8,6 +8,3 @@ TIL(Today I Learned)
 ### 3. Solidity
 ### 4. [SQL](/SQL)
 -------
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5MjE4NzAyMjBdfQ==
--->
