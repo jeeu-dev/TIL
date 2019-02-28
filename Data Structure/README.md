@@ -1,4 +1,4 @@
-C/C++/자료구조SQLD
+C/C++/자료구조
 ====================
 
 > 자료 : [패스트캠퍼스 컴퓨터 공학 올인원 패키지](https://www.fastcampus.co.kr/dev_online_cs/)
@@ -28,5 +28,5 @@ C/C++/자료구조SQLD
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIyODE2MjIzMV19
+eyJoaXN0b3J5IjpbNTQ3MDA2N119
 -->
