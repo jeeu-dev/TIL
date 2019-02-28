@@ -1,4 +1,5 @@
-[![HitCount](http://hits.dwyl.io/jeeu-dev/TIL.svg)](http://hits.dwyl.io/jeeu-dev/TIL)<br>
+[![HitCount](http://hits.dwyl.io/jeeu-dev/TIL.svg)](http://hits.dwyl.io/jeeu-dev/TIL)
+
 TIL(Today I Learned)
 ====================
 
