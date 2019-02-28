@@ -17,16 +17,10 @@ C/C++/자료구조
 
 #### 2강 - 변수와 상수
 - 본 문서는 자료구조(Data Stucture)를 공부하기 위한 문서입니다. 
-> 자료 : 
--------
-> 2019-02-23
-
-### 목차
-
 
 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTQ3MDA2N119
+eyJoaXN0b3J5IjpbLTcxOTM4MzQ1M119
 -->
