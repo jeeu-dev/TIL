@@ -19,8 +19,6 @@ C/C++/자료구조
 - 본 문서는 자료구조(Data Stucture)를 공부하기 위한 문서입니다. 
 
 
-asdfasdf
-
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzE3MjQ5MDE5XX0=
+eyJoaXN0b3J5IjpbOTYwOTMxNTkxXX0=
 -->
