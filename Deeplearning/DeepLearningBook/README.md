@@ -8,7 +8,7 @@ Deep Learning
 ### 들어가기에 앞서 [참고자료1](https://tv.naver.com/v/3185672)을 통한 사전 공부
 - 오토인코더의 4 가지 키워드 <br>
 Unsupervised learning, Manifold learning, Generative model learning, ML density estimation <br>
->2019-03-02
+>2019-03-04
 
 
 
