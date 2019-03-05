@@ -68,15 +68,23 @@ Unsupervised learning, Manifold learning, Generative model learning, ML density 
 
 - Autoencoders = Auto-associators = Diabolo networks = Sandglass-shaped net
 
-- 
+- activation 없이 쓰는걸 linear autoencoder라고 한다.
 
+- Decoder가 최소한 학습 데이터는 생성해 낼 수 있게 된다. → 생성된 데이터가 학습 데이터 좀 닮아 있다.
 
+- Encoder가 최소한 학습 데이터는 잘 latnet vector로 표현 할 수 있게 된다. → 데이터의 추상화를 위해 많이 사용된다. 
 
+- #### Peformance - Pretraining
 
+- Denoising AutoEncoder - noise 추가
 
+- Stacked Denoising Auto-Encoders(SDAE)
 
+- #### Performance - Generation
 
+- Stochastic Contractive AutoEncoder(SCAE)
 
+- Contractive AutoEncoder(CAE)
 
 
 
