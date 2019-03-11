@@ -237,11 +237,69 @@ Ex) 재귀함수를 이용한 팩토리얼
 - 한 바이트 씩 값을 저장하므로 문자열 배열의 처리 방식과 흡사하다.
 - 따라서 memset() 함수는 <string.h> 라이브러리에 선언되어 있다.
 
-> 2019-03-09
+> 2019-03-11
 
+#### 15강 - 함수 포인터
 
+- C언어에서는 함수의 이름을 이용해 특정한 함수를 호출한다.
+- 함수 이름은 메모리 주소를 반환한다.
 
+- 함수 포인터는 특정한 함수의 반환 자료형을 지정하는 방식으로 선언할 수 있다.
 
+- 함수 포인터를 이용하면 형태가 같은 서로 다른 기능의 함수를 선택적으로 사용할 수 있습니다.
+
+- ```
+  반환 자료형(*이름)(매개별수) = 함수명;
+  ```
+
+- ```c
+  #include <stdio.h>
+  
+  void myFunction(){
+      printf("It's my function");
+  }
+  
+  void yourFunction(){
+      printf("It's your function");
+  }
+  
+  int main(void){
+      void(*fp)() = myFunction;
+      fp();
+      fp = yourFunction;
+      fp();
+      system("pause");
+      return 0;
+  }
+  ```
+
+- 함수 포인터를 반환하여 사용하기
+
+  ```c
+  #include <stdio.h>
+  
+  int add(int a, int b){
+      return a + b;
+  }
+  
+  int(*process(char* a))(int, int){
+      printf("%s\n", a);
+      return add;
+  }
+  
+  int main(void){
+      int(*fp)(int, int) = add;
+      printf("%d\n", fp(10, 30));
+      fp = sub;
+      printf("%d\n", process("10 + 20 = ?")(10, 20));
+      system("pause");
+      return 0;
+  }
+  ```
+
+  - 잘 안쓴다. 필요할 때 구글링. 
+
+  
 
 
 
