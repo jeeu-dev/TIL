@@ -299,9 +299,133 @@ Ex) 재귀함수를 이용한 팩토리얼
 
   - 잘 안쓴다. 필요할 때 구글링. 
 
+#### 16강 - 구조체
+
+- 여러개의 변수를 묶어 **하나의 객체**를 표현하고자 할 때 구조체를 사용할 수 있다.
+
+- 캐릭터, 몬스터, 학생, 좌표 등 다양한 객체를 모두 프로그래밍 언어를 이용해 표현할 수 있다.
+
+- ```c
+  struct 구조체명{
+      자료형1 변수명1;
+      자료형2 변수명2;
+  }
+  ```
+
+- ```c
+  struct Student{
+      char studentId[10];
+      char name[10];
+      int grade;
+      int major;
+  }
+  ```
+
+- 구조체의 변수의 선언과 접근
+
+  - 기본적으로 구조체의 변수에 접근할 때는 온점(.)을 사용한다.
+
+    ```c
+    struct Student s; //구조체 변수 선언
+    strcpy(s.studentId, "00000000"); //구조체 변수에 접근
+    strcpy(s.name, "ooo");
+    s.grade = 4;
+    strcpy(s.major, "OOO OOO");
+    ```
+
+- 구조체의 정의와 선언
+
+  - 하나의 구조체 변수만 사용하는 경우 정의와 동시에 선언을 할 수도 있다.
+
+  - 이 경우 변수는 전역 변수로 사용된다.
+
+    ```c
+    struct Student{ // 학생 구조체 정의 및 선언
+      char studentId[10];
+      char name[10];
+      int grade;
+      char major[51];  
+    } s;
+    ```
+
+- 구조체의 초기화
+
+  - 구조체의 변수를 한 번에 초기화하기 위해서는 중괄호에 차례대로 변수의 값을 넣는다.
+
+    ```c
+    struct Student s = {"000000", "OOO", 1, "OOOOOO"};
+    ```
+
+- 더 짧게 구조체 정의하기
+
+  - typedef 키워드를 이용하면 임의의 자료형을 만들 수 있으므로 선언이 더 짧아진다.
+
+    ```c
+    typedef struct Student{
+        char studentId[10];
+        ...
+    } Student;
+    ```
+
+  - 최근에는 익명 구조체의 개념이 등장하여, 구조체 이름 부분을 비워놔도 된다.
+
+    ```c
+    typedef struct{ //학생 구조체 정의
+        ...
+    } Student
+    ```
+
+- 구조체 포인터 변수에 접근하기
+
+  - 구조체가 포인터 변수로 사용되는 경우 변수에 접근할 때 화살표 (->)를 사용합니다.
+
+    ```c
+    int main(void){
+        Student *s = malloc(sizeof(Student));
+        
+        printf("학번: %s\n", s->studentId);
+        printf("이름: %s\n", s->name);
+        system("pause");
+        return 0;
+    }
+    ```
+
+#### 17강 - 파일 입출력
+
+- 프로그램이 꺼진 이후에도 데이터를 저장하기 위해서는 파일 입출력이 필요
+- 파일을 열고 닫기
+  - 파일 입출력 변수는 FILE 형식의 포인터 변수로 선언합니다.
+  - 파일을 열 떄는 fopen() 함수를 이용합니다.
+    - 파일경로와 접근 방식을 설정할 수 있습니다. 
+    - r : 읽기, w : 쓰기, a : 접근하여 데이터를 뒤에서부터 기록
+  - 파일을 닫을 때는 fclose() 함수를 이용합니다.
+
+- 파일 입출력 함수
+
+  - 기본적인 입출력을 위해서 printf()와 scanf() 함수를 사용하곤 했습니다.
+  - 파일 입출력에서는 그 대신에 fprintf()와 fscanf()가 사용된다.
+    fprintf(파일 포인터, 서식, 형식지정자);
+    fscanf(파일 포인터, 서식, 형식지정자);
+
+- 파일 입출력의 과정
+
+  - 파일 입출력은 열고, 읽고/쓰고, 닫기의 과정을 철저히 따라야 한다.
+  - 파일을 열 때는 파일 포인터가 사용되며, 이는 동적으로 할당된 것
+  - 따라서 파일 처리 이후에 파일을 닫아주지 않으면 메모리 누수가 발생
+
+- ```c
+  #define _CRT_SECURE_NO_WARNINGS
+  #include <stdio.h>
   
-
-
+  int main(void){
+      char s[20] = "Hello World";
+      FILE *fp;
+      fp = fopen("temp.txt", "w");
+      fprintf(fp, "%s\n", s);
+      fclose(fp);
+      return 0;
+  }
+  ```
 
 
 
