@@ -490,5 +490,270 @@ Ex) 재귀함수를 이용한 팩토리얼
     }
     ```
 
+> 2019-03-13
+
+### 19강 - 자료구조의 개요
+
+- 기본적인 자료구조들
+  - 선형구조 - 배열 / 연결 리스트 / 스택 / 큐
+  - 비선형 구조 - 트리 / 그래프
+- 프로그램의 성능 측정 방법론
+  - 시간 복잡도(Time Complexity)란 알고리즘에 사용되는 연산 횟수를 의미
+  - 공간 복잡도(Space Complexity)란 알고리즘에 사용되는 메모리의 양 의미
+  - 효율적인 알고리즘을 사용한다고 했을 때 일반적으로 시간과 공간은 반비례 관계
+- 프로그램의 성능 측정 방법론
+  - 시간 복잡도를 표현할 때는 최악의 경우를 나타내는 Big-O 표기법을 사용
+  - n이 1000일 때?
+    - n : 1,000번의 연산
+    - nlogn : 약 10,000번의 연산
+    - n^2 : 1,000,000번의 연산
+    - n^3 : 1,000,000,000번의 연산
+  - **보통 연산 횟수가 10억을 넘어가면 1초 이상의 시간이 소요됩니다**
+- 시간 복잡도를 표기할 때는 항상 큰 항과 계수만 표시합니다.
+  Ex) O(3n^2 + n ) = O(n^2)
+- 현실적인 다양한 문제에서는 시간 제한이 1초 정도라고 생각
+
+- 공간 복잡도를 표기할 때는 일반적으로 MB 단위로 표기한다.
+  int a[1000] : 4KB
+  int a[1000000] : 4MB
+  int a[2000] [2000] : 16MB
+
+### 20강 - 연결 리스트
+
+- 일반적으로 배열을 사용하여 데이터를 순차적으로 저장하고, 나열할 수 있다.
+
+- 배열을 사용하는 경우 메모리 공간이 불필요하게 낭비 될 수 있다.
+
+- 배열 기반의 리스트
+
+  ```c
+  #include <stdio.h>
+  #define INF 10000
+  
+  int arr[INF];
+  int count = 0;
+  
+  void addBack(int data){
+      arr[count] = data;
+      count ++;
+  }
+  
+  void addFirst(int data){ // 뒤쪽부터 앞쪽까지 옮겨준다
+      for(int i = count; i>=1; i--){
+          arr[i] = arr[i-1];
+      }
+      arr[0] = data;
+      count++;
+  }
+  ```
+
+- 특정한 위치의 원소를 삭제하는 함수는 어떻게 만들 수 있을까?
+
+  1. 특정한 위치의 원소를 삭제하는 removeAt() 함수는 다음과 같이 구현
+
+     ```c
+     void removeAt(int index){
+         for(int i = index; i < count-1; i++){
+             arr[i] = arr[i+1];
+         }
+         count--;
+     }
+     ```
+
+- 배열 기반 리스트의 특징
+
+  1. 배열로 만들었으므로 특정한 위치의 원소에 즉시 접근할 수 있다는 장점
+  2. 데이터가 들어갈 공간을 미리 메모리에 할당해야 한다는 단점
+  3. 원하는 위치로의 삽입이나 삭제가 비효율적
+
+- 연결리스트
+
+  1. 일반적으로 연결 리스트는 구조체와 포인터를 함께 사용하여 구현
+  2. 연결 리스트는 리스트의 중간 지점에 노드를 구가하거나 삭제할 수 있어야 함
+  3. 필요할 때마다 메모리 공간을 할당
+
+  - 포인터를 이용해 **단방향적**으로 다음 노드를 가리킴
+  - 일반적으로 연결 리스트의 시작 노드를 헤드(Head)라고 하여 별도로 관리
+  - 다음 노드가 없는 끝 노드의 다음 위치 값으로 NULL을 넣음
+
+- 연결 리스트 구조체 만들기
+
+  ```c
+  #include <stdio.h>
+  #include <stdlib.h>
+  
+  typedef struct{
+      int data;
+      struct Node *next;
+  } Node;
+  
+  Node *head;
+  
+  int main(void){
+      head = (Node*)malloc(sizeof(Node));
+      Node *node1 = (Node*)malloc(sizeof(Node));
+      node1->data = 1;
+      Node *node2 = (Node*)malloc(sizeof(Node));
+      node1->data = 2;
+      head->next = node1;
+      node1->next = node2;
+      node2->next = NULL;
+      Node *cur = head->next;
+      while (cur != NULL){
+          printf("%d ", cur->data);
+          cur = cur->next;
+      }
+      system("pause");
+      return 0;
+  }
+  ```
+
+- 연결 리스트 메모리 해제 함수
+
+  ```c
+  void freeAll(Node *root){
+      Node *cur = head->next;
+      While (cur != NULL){
+          Node *next = cul->next;
+          free(cur);
+          cur = next;
+      }
+  }
+  ```
+
+- 연결 리스트 전체 출력 함수
+
+  ```c
+  void showAll(Node *root)){
+      Node *cur = head->next;
+      while(cur != NULL){
+          printf("%d ", cur->data);
+          cur = cur->next;
+      }
+  }
+  ```
+
+- 완성된 연결 리스트 사용하기
+
+  ```c
+  int main(void){
+      head = (Node*) malloc(sizeof(Node));
+      head->next = NULL;
+      addFront(head, 2);
+      addFront(head, 1);
+      addFront(head, 7);
+      addFront(head, 9);
+      addFront(head, 8);
+      removeFront(head);
+      showAll(head);
+      freeAll(head);
+      system("pause");
+      return 0;
+  }
+  ```
+
+- 연결 리스트 구현에 있어서 주의할 점
+  1. 위 소스코드에 덧붙여서 삽입 및 삭제 기능에서의 예외 사항을 처리할 필요가 있다.
+  2. 삭제할 원소가 없는데 삭제하는 경우, 머리(Head) 노드 자체를 잘못 넣은 경우 등을 체크해야 한다.
+- 연결 리스트의 특징
+  1. 삽입과 삭제가 배열에 비해서 간단하다는 장점
+  2. 배열과 다르게 특정 인덱스로 즉시 접근하지 못하며, 원소를 차례대로 검색해야함
+  3. 추가적인 포인터 변수가 사용되므로 메모리 공간이 낭비
+
+- 정리
+  1. 연결 리스트는 데이터를 선형적으로 저장하고 처리하는 방법
+  2. 기존에 배열을 이용했을 때보다 삽입과 삭제가 많은 경우에 효율적
+  3. 다만 특정한 인덱스에 바로 참조해야 할 때가 많다면 배열을 이용하는 것이 효율적
+
+### 21강 - 양방향 연결 리스트
+
+- 양방향 연결 리스트
+
+  - 양방향 연결 리스트는 머리(Head)와 꼬리(Tail)를 모두 가진다
+  - 양방향 연결 리스트의 각 노드는 앞 노드와 뒤 노드의 정보를 모두 저장
+  - 우리는 데이터를 '오름차순'으로 저장하는 양방향 연결 리스트를 구현
+
+- 양방향 연결 리스트 선언하기
+
+  ```c
+  #include <stdio.h>
+  #include <stdlib.h>
+  
+  typedef struct{
+      int data;
+      struct Node *prev;
+      struct Node *next;
+  } Node;
+  
+  Node *head, *tail;
+  ```
+
+- 양방향 연결 리스트 삽입 함수
+
+  ```c
+  void insert(int data){
+      Node* node = (Node*) malloc(sizeof(Node));
+      node->data = data;
+      Node* cur;
+      cur = head->next;
+      while(cur->data) < data && cur != tail){
+          cur = cur->next;
+      }
+      Node* prev = cur->prev;
+      prev->next = node;
+      node->prev = prev;
+      cur->prev = node;
+      node->next = cur;
+  }
+  ```
+
+- 양방향 연결 리스트 삭제 함수
+
+  ```c
+  void removeFront(){
+      Node* node = head->next;
+      head->next = node->next;
+      Node* next = node->next;
+      next->prev = head;
+      free(node);
+  }
+  ```
+
+- 완성된 양방향 연결 리스트 사용하기
+
+  ```c
+  int main(void){
+      head = (Node*) malloc(sizeof(Node));
+      tail = (Node*) malloc(sizeof(Node));
+      head->next = tail;
+      head->prev = head;
+      tail->next = tail;
+      tail->prev = head;
+      insert(2);
+      insert(1);
+      insert(3);
+      insert(9);
+      insert(7);
+      removeFront();
+      show();
+      system("pause");
+      return 0;
+  }
+  ```
+
+- 양방향 연결 리스트 구현에 있어서 주의할 점
+
+  1. 위 소스 코드에 덧붙여서 삽입 및 삭제 기능에서의 예외 사항을 처리할 필요가 있다.
+  2. 더 이상 삭제할 원소가 없는데 삭제하는 경우 등을 체크해야 한다. 
+
+- 정리
+  - 양방향 연결 리스트
+    1. 양방향 연결 리스트에서는 각 노드가 앞 노드와 뒤 노드의 정보를 저장하고 있다.
+    2. 양방향 연결 리스트를 이용하면 리스트의 앞에서부터 혹은 뒤에서부터 모두 접근할 수 있다.
+
+
+
+
+
 
 
