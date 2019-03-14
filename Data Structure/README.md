@@ -751,6 +751,180 @@ Ex) 재귀함수를 이용한 팩토리얼
     1. 양방향 연결 리스트에서는 각 노드가 앞 노드와 뒤 노드의 정보를 저장하고 있다.
     2. 양방향 연결 리스트를 이용하면 리스트의 앞에서부터 혹은 뒤에서부터 모두 접근할 수 있다.
 
+> 2019-03-14
+
+### 22강 - 스택
+
+- 스택(Stack)은 한쪽으로 들어가서 한쪽을 나오는 자료구조(Data Structure)이다.
+- 이러한 특성 때문에 수식 계산 등의 알고리즘에서 다방면으로 활용
+  - PUSH : 스택에 데이터를 넣는다.
+  - POP : 스택에서 데이터를 빼낸다.
+
+- 스택의 구현
+
+  - 스택(Stack)은 배열을 이용한 구현 방법과 연결 리스트를 이용한 구현 방법으로 나누어진다.
+  - 가장 기본적인 형태의 자료구조로 구현 난이도는 낮은 편이다.
+
+- 배열을 이용한 스택 구현
+
+  - 스택의 선언
+
+    ```c
+    #include <stdio.h>
+    #define SIZE 10000
+    #define INF 99999999
+    
+    int stack[SIZE];
+    int top = -1;
+    ```
+
+  - 스택 삽입 함수
+
+    ```c
+    void push(int data){
+        if (top == SIZE - 1){
+            printf("스택 오버플로우가 발생했습니다.\n");
+            return;
+        }
+        stack[++top] = data;
+    }
+    ```
+
+  - 스택 추출 함수
+
+    ```c
+    int pop(){
+        if(top == -1){
+            printf("스택 언더플로우가 발생했습니다.\n");
+            return -INF;
+        }
+        return stack[top--];
+    }
+    ```
+
+  - 스택 전체 출력 함수
+
+    ```c
+    void show(){
+        printf("--- 스택의 최상단 ---\n");
+        for(int i = top; i>=0; i--){
+            printf("%d\n", stack[i]);
+        }
+        printf("--- 스택의 최하단 ---\n");
+    }
+    ```
+
+  - 완성된 스택 사용하기
+
+    ```c
+    int main(void){
+        push(7);
+        push(5);
+        push(4);
+        pop();
+        push(6);
+        pop();
+        show();
+        system("pause");
+        return 0;
+    }
+    ```
+
+- 연결 리스트를 이용한 스택 구현
+
+  - 스택의 선언
+
+    ```c
+    #include <stdio.h>
+    #include <stdlib.h>
+    #define INF 99999999
+    
+    typedef struct{
+        int data;
+        struct Node *next;
+    } Node;
+    
+    typedef struct{
+        Node *top;
+    } Stack;
+    ```
+
+- 배열을 이용한 스택 구현
+
+  - 스택 삽입 함수
+
+    ```c
+    void push(Stack *stack, int data){
+        Node *node = (Node*) malloc(sizeof(Node));
+        node->data = data;
+        node->next = stack->top;
+        stack->top = node;
+    }
+    ```
+
+  - 스택 추출 함수
+
+    ```c
+    int pop(Stack *stack){
+        if(stack->top == NULL){
+            printf("스택 언더플로우가 발생했습니다.\n");
+            return -INF;
+        }
+        NOde *node = stack->top;
+        int data = node->data;
+        stack->top = node->next;
+        free(node);
+        return data;
+    }
+    ```
+
+  - 스택 전체 출력 함수
+
+    ```c
+    void show(Stack *stack){
+        Node *cur = stack->top;
+        printf("--- 스택의 최상단 ---\n");
+        while(cur != NULL){
+            printf("%d\n", cur->data);
+            cur = cur->next;
+        }
+        printf("--- 스택의 최하단 ---\n"):
+    }
+    ```
+
+  - 완성된 스택 사용하기
+
+    ```c
+    int main(void){
+        Stack stack;
+        stack.top = NULL; // 널값을 반드시 넣어줘야 체크 가능
+        show(&stack);
+        push(&stack, 7);
+        push(&stack, 5);
+        push(&stack, 4);
+        pop(&stack);
+        push(&stack, 6);
+        pop(&stack);
+        show(&stack);
+        system("pause");
+        return 0;
+    }
+    ```
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
