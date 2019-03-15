@@ -911,23 +911,117 @@ Ex) 재귀함수를 이용한 팩토리얼
     }
     ```
 
+
+> 2019-03-15
+
+### 23강 - 스택을 활용한 계산기 만들기
+
+- 스택을 활용해 수식을 계산하는 방법
+
+  - 수식을 후위 표기법으로 변환한다.
+  - 후위 표기법을 계산하여 결과를 도출한다.
+
+- 스택 구현하기
+
+  - 스택의 정의
+
+    ```c
+    #define _CRT_SECURE_NO_WARNINGS
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
     
+    typedef struct Node{
+        char data[100];
+        struct Node *next;
+    } Node;
+    
+    typedef struct Stack{
+        Node *top;
+    } Stack;
+    ```
 
+  - 스택 함수 구현하기
 
+    ```c
+    void push(Stack *stack, char *data){
+        Node *node = (Node*)malloc(sizeof(Node));
+        strcpy(node->data, data);
+        node->next = stack->top;
+        stack->top = node;
+    }
+    
+    char* getTop(Stack *stack){
+        Node *top = stack->top;
+        return top->data;
+    }
+    
+    char* pop(Stack *stack){
+        if(stack->top == NULL){
+            printf("스택 언더플로우가 발생했습니다. \n");
+            return NULL;
+        }
+        Node *node = stack->top;
+        char *data = (char*)malloc(sizeof(char)*100);
+        strcpy(data, node->data);
+        stack->top = node->next;
+        free(node);
+        return data;
+    }
+    ```
 
+- 중위 표기법을 후위 표기법으로 바꾸는 방법
 
+  - 피연산자가 들어오면 바로 출력
+  - 연산자가 들어오면 자기보다 우선순위가 높거나 같은 것들을 빼고 자신을 스택에 담는다
+  - 여는 괄호 '('를 만나면 무조건 스택에 담는다.
+  - 닫는 괄호 ')'를 만나면 '('를 만날 때까지 스택에서 출력한다.
 
+- 후위 표기법으로 변환 
 
+  - 우선순위 함수 만들기
 
+    ```c
+    int getPriority(char *i){
+        if (!strcmp(i, "(")) return 0;
+        if (!strcmp(i, "+") || !strcmp(i, "-")) return 1;
+        if (!strcmp(i, "+") || !strcmp(i, "/")) return 2;
+        return 3;
+    }
+    ```
 
+  - 변환 함수 만들기
 
+    ```c
+    char* transition(Stack *stack, char **s, int size){
+        char res[1000] = "";
+        for (int i = 0; i < size; i++){
+            if(!strcmp(s[i], "+") || !strcmp(s[i], "-") || !strcmp(s[i], "/")){
+                while (stack->top != NULL && getPriority(getTop(stack)) >= getPriority(s[i])){
+                    strcat(res, pop(stack)); strcat(res, " ");
+                }
+                push(stack, s[i]);
+            }
+            else if(!strcmp(s[i], "(")) push(stack, s[i]);
+            else if(!strcmp(s[i], ")")){
+                while(strcmp(getTop(stack), "(")){
+                    strcat(res, pop(stack)); strcat(res, " ");
+                }
+            } pop(stack);
+        }
+        else{strcat(res, s[i]); strcat(res, " "); }
+      }
+      while(stack->top != NULL){
+        strcat(res, pop(stack)); strcat(res, " ");
+      }
+      return res;
+    }
+    
+    
+    
+    ```
 
-
-
-
-
-
-
+-  To be continue..
 
 
 
