@@ -1021,7 +1021,7 @@ Ex) 재귀함수를 이용한 팩토리얼
     
     ```
 
--  To be continue..
+-  To be continue.. ( 6:00부터)
 
 
 
