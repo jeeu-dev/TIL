@@ -1021,7 +1021,75 @@ Ex) 재귀함수를 이용한 팩토리얼
     
     ```
 
--  To be continue.. ( 6:00부터)
+>2019-03-16
+
+- 어제에 이어서..
+
+- 후위 표기법을 계산하는 방법
+
+  - 피연산자가 들어오면 스택에 담습니다.
+
+  - 연산자를 만나면 스택에서 두 개의 연산자를 꺼내서 연산한 뒤에 그 결과를 스택에 담습니다.
+
+  - 연산을 마친 뒤에 스택에 남아있는 하나의 피연산자가 연산 수행 결과입니다.
+
+    ```c
+    void calculate(Stack *stack, char **s, int size){
+        int x, y, z;
+        for(int i = 0; i<size; i++){
+            if(!strcmp(s[i], "+") || !strcmp(s[i], "-") || !strcmp(s[i], "*") || !strcmp(s[i], "/")){
+                x = atoi(pop(stack));
+                y = atoi(pop(stack));
+                if(!strcmp(s[i], "+")) z = y + x;
+                if(!strcmp(s[i], "-")) z = y - x;
+                if(!strcmp(s[i], "*")) z = y * x;
+                if(!strcmp(s[i], "/")) z = y / x;
+                char buffer[100];
+                sprintf(buffer, "%d", z);
+                push(stack, buffer);
+            }
+            else{
+                push(stack, s[i]);
+            }
+        }
+        printf("%s\n", pop(stack));
+    }
+    ```
+
+    ```c
+    int main(void){
+        Stack stack;
+        stack.top = NULL;
+        char a[100] = "( ( 3 + 4 ) * 5 ) - 5 * 7 * 5 - 5 * 10;"
+        int size = 1;
+        for(int i = 0; i < strlen(a); i++){
+            if(a[i] == ' ') size++;
+        }
+        char *ptr = strtok(a, " ");
+        char **input = (char**)malloc(sizeof(char*) * size);
+        for (int i = 0; i < size; i++){
+            strcpy(input[i], ptr);
+            ptr = strtok(NULL, " ");
+        }
+        char b[1000] = "";
+        strcpy(b, transition(&stack, input, size));
+        printf("후위 표기법: %s\n", b);
+        size = 1;
+        for(int i = 0; i < strlen(b)-1; i++){
+            if(b[i] == ' ') size++;
+        }
+        char *ptr2 = strtok(b, " ");
+        for(int i = 0; i < size; i++){ // 마지막은 항상 공백이 들어가므로 1을 빼기 
+            strcpy(input[i], ptr2);
+            ptr2 = strtok(NULL, " ");
+        }
+        calculate(&stack, input, size);
+        system("pause");
+        return 0;
+    }
+    ```
+
+    
 
 
 
