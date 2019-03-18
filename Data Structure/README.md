@@ -1094,5 +1094,5 @@ Ex) 재귀함수를 이용한 팩토리얼
 
 ### 24강 - 
 
-https://hangouts.google.com/call/hq102xC2gsYTyAmtd5ZBAEEM
+
 
