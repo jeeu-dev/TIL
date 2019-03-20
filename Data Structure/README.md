@@ -1262,7 +1262,98 @@ Ex) 재귀함수를 이용한 팩토리얼
       }
       ```
 
-      
+
+
+
+> 2019-03-20
+
+### 25강 - 선택 정렬과 삽입 정렬
+
+- 선택정렬
+
+  - 선택 정렬이란 **가장 작은 것을 선택해서 앞으로 보내는 정렬 기법**입니다. 가장 작은 것을 선택하는 데에 N번, 앞으로 보내는 데에 N번의 연산으로 O(N^2)의 시간 복잡도를 가집니다.
+
+  - 배열 선언
+
+    ```c
+    #define _CRT_SECURE_NO_WARINGS
+    #include <stdio.h>
+    #include <limits.h>
+    #define SIZE 1000
+    
+    int a[SIZE];
+    
+    int swap(int *a, int *b){
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+    ```
+
+  - 선택 정렬 수행하기
+
+    ```c
+    int main(void){
+        int n, min, index;
+        scanf("%d", &n);
+        for(int i = 0; i < n; i++) scanf("%d", &a[i]);
+        for(int i = 0; i < n; i++){
+            min = INT_MAX;
+            for(int j = i; j < n ; j++){
+                if(min > a[j]){
+                    min = a[j];
+                    index = j;
+                }
+            }
+            swap(&a[i], &a[index]);
+        }
+        for(int i = 0; i < n; i++) printf("%d ", a[i]);
+        system("pause");
+        return 0;
+    }
+    ```
+
+- 삽입정렬
+
+  - 삽입 정렬이란 **각 숫자를 적절한 위치에 삽입하는 정렬 기법**이다. 들어갈 위치를 선택하는 데에 N번, 선택하는 횟수로 N번이므로 O(N^2)의 시간 복잡도를 가진다. **선택정렬보다 약간 더 빠르게 동작한다**
+
+  - 배열 선언
+
+    ```c
+    #define _CRT_SECURE_NO_WARINGS
+    #include <stdio.h>
+    #define SIZE 1000
+    
+    int a[SIZE];
+    
+    int swap(int *a, int *b){
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+    ```
+
+  - 삽입 정렬 수행하기
+
+    ```c
+    int main(void){
+        int n;
+        scanf("%d", &n);
+        for(int i = 0; i < n; i++) scanf("%d", &a[i]);
+        for(int i = 0; i < n - 1; i++){
+            int j = i;
+            while(j >= 0 && a[j] > a[j + 1]){
+                swap(&a[j], &a[j + 1]);
+                j--;
+            }
+        }
+        for(int i = 0; i < n; i++) printf("%d ", a[i]);
+        system("pause");
+        return 0;
+    }
+    ```
+
+- 선택 정렬과 삽입 정렬은 비효율적이지만 가장 간단한 알고리즘이다.
 
 
 
