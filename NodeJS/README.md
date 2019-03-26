@@ -18,3 +18,24 @@ Node.js
 
 ### 6.1 JavaScript 문법 - Number Data type
 
+### 6.2 JavaScript 문법 - String
+
+### 7.1 JavaScript 문법 - 변수의 형식
+
+### 8. JavaScript 문법 - Template Literal
+
+- 줄바꿈은 \n 를 써라
+- // 는 주석
+- Template Literal은 `로 시작한다.
+  - 바꿀 변수는 ${ }로 표시한다. 
+
+### 9. URL의 이해
+
+- https://opentutorials.org:3000/main?id=HTML&page=12
+- protocol://host:port/path?querystring
+- 웹서버는 80번 포트를 쓴다.
+
+### 10. URL을 통해서 입력된 값 사용하기
+
+### 11. App 제작 - 동적인 웹페이지 만들기
+
