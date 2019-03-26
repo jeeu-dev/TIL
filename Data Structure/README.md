@@ -1414,6 +1414,36 @@ Ex) 재귀함수를 이용한 팩토리얼
 
   - 퀵 정렬은 평균적인 시간 복잡도가 O(NlogN)인 가장 보편적인 정렬 알고리즘이다. 
 
+>  2019-03-27
+
+### 27강 - 계수 정렬
+
+- 계수 정렬(Counting Sort)는 크기를 기준으로 데이터의 개수를 세는 정렬 알고리즘이다. 각 데이터를 바로 크기를 기준으로 분류하므로 O(N)의 시간 복잡도를 가진다.
+
+- 차례대로 원소의 개수만큼 출력 : 0 0 1 1 1 2 2 2 3 3
+
+- ```C
+  #define _CRT_SECURE_NO_WARNINGS
+  #include <stdio.h>
+  #define MAX_VALUE 10001
+  
+  int n, m;
+  int a[MAX_VALUE];
+  
+  int mail(){
+      scanf("%d", &n);
+      for(int i = 0; i < n; i++){ scanf("%d", &m); a[m]++; }
+      for(int i = 0; i < MAX_VALUE; i++){
+          while(a[i] != 0){ printf("%d ", i); a[i]--;}
+      }
+      system("pause");
+  }
+  ```
+
+- 계수 정렬은 시간 복잡도가 O(N)인 정렬 알고리즘
+
+- 데이터의 크기가 한정적일 때 사용가능
+
 
 
 
