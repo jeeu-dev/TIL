@@ -26,4 +26,7 @@ TIL(Today I Learned)
 - [Data Structure](https://online.fastcampus.co.kr)
 - [Probabilities and Statistics](https://online.fastcampus.co.kr)
 - [Node Js](https://opentutorials.org/course/3332)
-- [PR12](https://youtu.be/L3hz57whyNw?list=PLWKf9beHi3Tg50UoyTe6rIm20sVQOH1br)
+- [PR12](https://youtu.be/L3hz57whyNw?list=PLWKf9beHi3Tg50UoyTe6rIm20sVQOH1br)-------
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTEzMzE4NTRdfQ==
+-->
