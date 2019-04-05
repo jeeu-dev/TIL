@@ -1444,6 +1444,51 @@ Ex) 재귀함수를 이용한 팩토리얼
 
 - 데이터의 크기가 한정적일 때 사용가능
 
+> 2019-04-06
+
+### 28강 - 기수 정렬
+
+- 기수 정렬(Radix Sort)는 자릿수를 기준으로 차례대로 데이터를 정렬하는 알고리즘입니다. 각 데이터를 **자릿수를 기준으로 분류**하므로 가장 큰 자릿수를 D라고 했을 때 O(DN)의 시간 복잡도를 가집니다.
+  - D가 10이 넘어가려면 데이터 수는 10억이 넘어야 한다 → 따라서 보통 N에 가까운 시간복잡도를 가진다.
+
+```C
+#define _CRT_SECURE_NO_WARNNGS
+#include <stdio.h>
+#define MAX 10000
+
+void radixSort(int *a, int n){
+    int res[MAX], maxValue = 0;
+    int exp = 1;
+    for (int i = 0; i < n; i++){
+        if(a[i] > maxValue) maxValue = a[i];
+    }
+    while (maxValue / exp > 0) { // 1의 자리부터 계산
+    int bucket[10] = {0};
+    for(int i = 0; i < n; i++) bucket[a[i] / exp % 10]++; //자릿수 배열 처리
+    for(int i = 1; i < 10; i++) bucket[i] += bucket[i -1]; //누적 계산
+        for(int i = n - 1; i >=0; i++){//같은 자릿수끼리는 순서를 유지
+            res[--bucket[a[i]] / exp % 10]] = a[i];
+        }
+        for(int i = 0; i < n; i++) a[i] = res[i]; //기본 배열 갱신
+        exp *= 10;
+    }
+}
+
+int main(void){
+    int a[MAX];
+    int i, n;
+    scanf("%d", &n);
+    for(int i = 0; i < n; i++){
+        scanf("%d", &a[i]);
+    }
+    radixSort(a, n);
+    for(int i = 0; i < n; i++){
+        printf("%d ", a[i]);
+    }
+    system("pause");
+}
+```
+
 
 
 
