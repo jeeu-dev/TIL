@@ -43,5 +43,5 @@ Node.js
 
 ### 12. Node.js의 파일 읽기 기능
 
-- 
-
+- CRUD
+- [File System](https://nodejs.org/dist/latest-v6.x/docs/api/fs.html)
