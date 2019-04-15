@@ -1543,7 +1543,7 @@ int main(void){
   - 왼쪽 자식을 방문합니다.
   - 오른쪽 자신을 방문합니다.
 
-  ```
+  ```c
   void preorder(Node* root){
       if(root){
           printf("%d ", root->data);
@@ -1553,9 +1553,62 @@ int main(void){
   }
   ```
 
-  
+- 이진 트리의 중위 순회
 
+  - 왼쪽 자식을 방문합니다.
+  - 자기 자신을 출력합니다.
+  - 오른쪽 자식을 방문합니다.
 
+  ```c
+  void inorder(Node* root){
+      if(root){
+          inorder(root->leftChild);
+          printf("%d ", root->data);
+          inorder(root->rightChild);
+      }
+  }
+  ```
+
+- 이진 트리의 후위 순회
+
+  - 왼쪽 자식을 방문합니다.
+  - 오른쪽 자식을 방문합니다.
+  - 자기 자신을 출력합니다. → 루트를 마지막으로 출력
+
+  ```c
+  void postorder(Node* root){
+      if(root){
+          postorder(root->leftChild);
+          postorder(root->rightChild);
+          printf("%d ", root->data);
+      }
+  }
+  ```
+
+- 이진 트리의 구현 및 순회
+
+  - 이진 트리 사용해보기
+
+    ```c
+    int main(void){
+        Node* n7 = initNode(50, NULL, NULL);
+        Node* n6 = initNode(37, NULL, NULL);
+        Node* n5 = initNode(23, NULL, NULL);
+        Node* n4 = initNode(5, NULL, NULL);
+        Node* n3 = initNode(48, n6, n7);
+        Node* n2 = initNode(17, n4, n5);
+        Node* n1 = initNode(30, n2, n3);
+        preorder(n1);
+        printf("\n");
+        inorder(n1);
+        printf("\n");
+        postorder(n1);
+        printf("pause");
+        return 0;
+    }
+    ```
+
+    
 
 
 
