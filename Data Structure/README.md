@@ -1509,6 +1509,54 @@ int main(void){
 - 이진트리는 많은 양의 노드를 낮은 높이에서 관리할 수 있다는 점에서 데이터 활용의 효율성이 높아진다.
 - 데이터 저장, 탐색 등의 다양한 목적에서 사용할 수 있다.
 
+> 2019-04-15
+
+### 30강 이진 트리의 구현 및 순회
+
+- 이진 트리는 포인터를 이용하여 구현하면 효과적인 데이터 관리가 가능합니다.
+
+  ```c
+  #include <stdio.h>
+  #include <stdlib.h>
+  
+  typedef struct {
+      int data;
+      struct Node *leftChild;
+      struct Node *rightChild;
+  } Node;
+  
+  Node* initNode(int data, Node* leftChild, Node* rightChild){
+      Node* node = (Node*)malloc(sizeof(Node));
+      node->data = data;
+      node->leftChild = leftChild;
+      node->rightChild = rightChild;
+      return node;
+  }
+  ```
+
+- 이진 트리의 순회
+  : 이진 트리에 담긴 데이터를 하나씩 방문하는 방법으로는 대표적으로 세 가지가 있습니다.
+
+- 이진 트리의 전위 순회
+
+  - 자기 자신을 출력합니다.
+  - 왼쪽 자식을 방문합니다.
+  - 오른쪽 자신을 방문합니다.
+
+  ```
+  void preorder(Node* root){
+      if(root){
+          printf("%d ", root->data);
+          preorder(root->leftChild);
+          preorder(root->rightChild);
+      }
+  }
+  ```
+
+  
+
+
+
 
 
 
