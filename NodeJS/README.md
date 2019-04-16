@@ -49,3 +49,9 @@ Node.js
 > 2019-04-16
 
 ### 13. App 제작 - 파일을 이용해 본문 구현
+
+### 14. Javascript - Boolean
+
+- Boolean datatype
+- 비교연산자
+
