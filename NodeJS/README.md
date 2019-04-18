@@ -50,8 +50,10 @@ Node.js
 
 ### 13. App 제작 - 파일을 이용해 본문 구현
 
-### 14. Javascript - Boolean
+### 14. Boolean
 
 - Boolean datatype
 - 비교연산자
+
+### 15. 비교연산자
 
