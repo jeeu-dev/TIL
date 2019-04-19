@@ -1734,7 +1734,209 @@ int main(void){
 
 > 2019-04-19
 
-### 32강 - 
+### 32강 - 순차 탐색과 이진 탐색
+
+- 순차 탐색(Sequential Search)은 특정한 원소를 찾기 위해 원소를 순차적으로 하나씩 탐색하는 방법
+
+- 문자열 순차 탐색 구현 1)
+
+  ```c
+  #define _CRT_SECURE_NO_WARNINGS
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <string.h>
+  #define LENGTH 1000
+  
+  char **array;
+  int founded;
+  ```
+
+- 문자열 순차 탐색 구현 2)
+
+  ```c
+  int main(void){
+      int n;
+      char *word;
+      word = malloc(sizeof(char) * LENGTH);
+      scanf("%d %s", &n, word);
+      array = (char**) malloc(sizeof(char*) * n);
+      for(int i = 0; i < n; i++){
+          array[i] = malloc(sizeof(char) * LENGTH);
+          scanf("%s", array[i]);
+      }
+      for(int i = 0; i < n; i++){
+          if(!strcmp(array[i], word)){
+              printf("%d번째 원소입니다. \n", i + 1);
+              founded = 1;
+          }
+      }
+      if (!founded) printf("원소를 찾을 수 없습니다. \n");
+      system("pause");
+      return 0;
+  }
+  ```
+
+  - 순차 탐색(Sequential Search)은 데이터 정렬 유무에 상관없이 가장 앞에 있는 원소부터 하나씩 확인해야 한다는 점에서 O(N)의 시간 복잡도를 가집니다.
+
+  - 이진 탐색(Binary Search)은 배열 내부 데이터가 이미 정렬 되어 있는 상황에서 사용 가능한 알고리즘입니다. 탐색 범위를 절반씩 좁혀가며 데이터를 탐색하는 특징이 있습니다.
+
+  - 이진 탐색(Binary Search)는 한 번 확인할 때마다 보아야 하는 원소의 개수가 절반씩 줄어든다는 점에서 탐색 시간이 O(logN)의 시간 복잡도를 가집니다.
+
+  - 이진 탐색 정의
+
+    ```c
+    #define _CRT_SECURE_NO_WARNINGS
+    #include <stdio.h>
+    #define MAX_SIZE 100000
+    
+    int a[MAX_SIZE];
+    int founded = 0;
+    
+    int search(int start, int end, int target){
+        if(start > end) return -9999;
+        int mid = (start + end) / 2;
+        if(a[mid] == target) return mid;
+        else if (a[mid] > target) return search(start, mid - 1, target);
+        else return search(mid + 1, end, target);
+    }
+    
+    int main(void){
+        int n, target;
+        scanf("%d %d", &n, &target);
+        for(int i = 0; i < n; i++) scanf("%d", &a[i]);
+        int result = search(0, n - 1, target);
+        if(result != -9999) printf("%d번째 원소입니다. \n", result + 1);
+        else printf("원소를 찾을 수 없습니다. \n");
+        system("pause");
+        return 0;
+    }
+    ```
+
+- 이진 탐색(Binary Search)는 한 번 확인할 때마다 보아야 하는 원소의 개수가 절반씩 줄어든다는 점에서 탐색 시간에서 O(logN)의 시간 복잡도를 가집니다.
+
+### 33강 - 그래프의 개념과 구현
+
+- 그래프(Graph)란 사물을 정점(Vertex)와 간선(Egde)으로 나타내기 위한 도구
+
+- 다음의 두가지 방식으로 구현할 수 있음
+
+  - 인접 행렬(Adjacency Matrix) : 2차원 배열을 사용하는 방식
+  - 인접 리스트(Adjacency List) : 리스트를 사용하는 방식
+
+- 인접 행렬에서는 그래프를 2차원 배열로 표현합니다.
+
+- 무방향 비가중치 그래프와 인접 행렬
+
+  - 모든 간선이 방향성을 가지지 않는 그래프를 무방향 그래프라고 합니다.
+
+  - 모든 간선에 가중치가 없는 그래프를 비가중치 그래프라고 합니다.
+
+  - 무방향 비가중치 그래프가 주어졌을 때 연결되어 있는 상황을 인접 행렬로 출력할 수 있습니다.
+
+    ```c
+    #define _CRT_SECURE_NO_WARNINGS
+    #include <stdio.h>
+    
+    int a[1001][1001];
+    int n, m;
+    
+    int main(void){
+        scanf("%d %d", &n, &m);
+        for(int i = 0; i < m; i++){
+            int x, y;
+            scanf("%d %d", &x. &y);
+            a[x][y] = 1;
+            a[y][x] = 1;
+        }
+        for (int i = 1; i <= n; i++){
+            for(int j = 1; j <= n; j++){
+                printf("%d ", a[i][k]);
+            }
+            printf("\n");
+        }
+        system("pause");
+    }
+    ```
+
+- 방향 가중치 그래프와 인접 리스트
+
+  - 모든 간선이 방향을 가지는 그래프를 방향 그래프라고 한다.
+
+  - 모든 간선에 가중치가 있는 그래프를 가중치 그래프라고 한다.
+
+  - 방향 가중치 그래프가 주어졌을 때 연결되어 있는 상황을 인접 리스트로 출력할 수 있다.
+
+  - 1) 연결 리스트 구조체 만들기
+
+    ```c
+    #define _CRT_SECURE_NO_WARNINGS
+    #include <stdio.h>
+    #include <stdlib.h>
+    
+    typedef struct{
+        int index;
+        int distance;
+        struct Node *next;
+    } Node;
+    ```
+
+  - 2) 연결 리스트 삽입 함수 만들기
+
+    ```c
+    void addFront(Node *root, int index, int distance){
+        Node *node = (Node*)malloc(sizeof(Node));
+        node->index = index;
+        node->distance = distance;
+        node->next = root->next;
+        root->next = node;
+    }
+    ```
+
+  - 3) 연결 리스트 출력 함수
+
+    ```c
+    void showAll(Node *root){
+        Node *cur = root->next;
+        while(cur != NULL){
+            printf("%d"(거리 : %d) ", cur->index, cur->distance);
+            cur = cur->next;
+        }
+    }
+    ```
+
+  - 4) 연결 리스트 사용하기
+
+    ```c
+    int main(void){
+        int n, m;
+        scanf("%d %d", &n, &m);
+        Node** a = (Node*)malloc(sizeof(Node*) * (n + 1));
+        for(int i = 1; i <= n; i++){
+            a[i] = (Node*)malloc(sizeof(Node));
+            a[i]->next = NULL;
+        }
+        for(int i = 0; i < m; i++){
+            int x, y distance;
+            scanf("%d %d %d", &x, &y, &distance);
+            addFront(a[x], y, distance);
+        }
+        for(int i = 1; i <= n; i++){
+            printf("원소 [%d]: ", i);
+            showAll(a[i]);
+            printf("\n");
+        }
+        system("pause");
+        return 0;
+    }
+    ```
+
+  - 인접 행렬은 모든 정점들의 연결 여부를 저장하여 O(V^2)의 공간을 요구하므로 공간 효율성이 떨어지지지만 두 정점이 서로 연결되어 있는지 확인하기 위해 O(1)의 시간을 요구합니다.
+
+  - 인접 리스트는 연결된 간선의 정보만을 저장하여 O(E)의 공간을 요구하므로 공간 효율성이 우수하지만 두 정점이 서로 연결되어 있는지 확인하기 위해 O(V)의 시간을 요구합니다. 
+
+
+
+
 
 
 
